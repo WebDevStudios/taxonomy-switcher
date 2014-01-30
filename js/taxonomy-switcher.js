@@ -1,6 +1,8 @@
 (function(window, document, $, undefined){
 
-	var taxswitch    = {};
+	window.TaxonomySwitcher = {};
+
+	var txsw         = TaxonomySwitcher;
 	var $context     = $('.wrap.taxonomy-switcher');
 	var $nonce       = $('#taxonomy_switcher_nonce');
 	var $ajaxinput   = $('#taxonomy-switcher-parent');
@@ -9,35 +11,27 @@
 	var $ajaxhelp    = $('.taxonomy-switcher-ajax-results-help', $ajaxcontext);
 	var $spinner     = $('.taxonomy-switcher-spinner', $ajaxcontext);
 
-	$context
-		// when typing a term name..
-		.on( 'keyup', '#taxonomy-switcher-parent', function(event) {
-			// fire our ajax function
-			$(this).maybeAjax( event );
-
-		}).blur(function() {
-			// when leaving the input
-			setTimeout(function(){
-				// if it's been 2 seconds, hide our spinner
-				$spinner.hide();
-			}, 2000);
-		})
-		// When clicking on a results post, populate our input
-		.on( 'click', '.taxonomy-switcher-ajax-results-posts a', function(event) {
-			event.preventDefault();
-			var $self = $(this);
-			// hide our spinner
+	txsw.hideSpinner = function() {
+		// when leaving the input
+		setTimeout(function(){
+			// if it's been 2 seconds, hide our spinner
 			$spinner.hide();
-			// populate post ID to field
-			$ajaxinput.val( $self.data('termid') )/*.focus()*/;
-			// clear our results
-			$ajaxresults.html('');
-			$ajaxhelp.hide();
+		}, 2000);
+	}
 
-		});
+	txsw.resultsClick = function( event ) {
+		event.preventDefault();
+		var $self = $(this);
+		// hide our spinner
+		$spinner.hide();
+		// populate post ID to field
+		$ajaxinput.val( $self.data('termid') )/*.focus()*/;
+		// clear our results
+		$ajaxresults.html('');
+		$ajaxhelp.hide();
+	}
 
-
-	taxswitch.ajaxSuccess = function(response) {
+	txsw.ajaxSuccess = function(response) {
 		console.log( 'response', response );
 		// hide our spinner
 		$spinner.hide();
@@ -50,7 +44,7 @@
 		}
 	}
 
-	$.fn.maybeAjax = function( evt ) {
+	txsw.maybeAjax = function( evt ) {
 
 		$self = $(this);
 		// get typed value
@@ -74,7 +68,7 @@
 						type     : 'post',
 						dataType : 'json',
 						url      : ajaxurl,
-						success  : taxswitch.ajaxSuccess,
+						success  : txsw.ajaxSuccess,
 						data     : {
 							'action'   : 'taxonomy_switcher_search_term_handler',
 							'tax_name' : $('#from_tax').val(),
@@ -85,9 +79,12 @@
 				}
 			}, 500);
 		}
-
-		return this;
-
 	}
+
+	$context
+		// when typing a term name..
+		.on( 'keyup', '#taxonomy-switcher-parent', txsw.maybeAjax ).blur( txsw.hideSpinner )
+		// When clicking on a results post, populate our input
+		.on( 'click', '.taxonomy-switcher-ajax-results-posts a', txsw.resultsClick );
 
 })(window, document, jQuery);
