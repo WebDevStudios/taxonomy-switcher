@@ -28,7 +28,7 @@ Please keep in mind, if parent term isn't set, it will default to zero, which wi
 1. **Backup!**
 2. Upload 'taxonomy-switcher' to the '/wp-content/plugins/' directory
 3. Activate the plugin through the 'Plugins' menu in WordPress
-4. Navigate to the 'Taxonomy Switcher' admin page. You'll find the menu item under the 'Settings' menu item on the left.
+4. Navigate to the 'Taxonomy Switcher' admin page. You'll find the menu item under the 'Tools' menu item on the left.
 5. Select your "From", and "To" Taxonomies.
 6. Optionally select a parent term to limit terms to switch. Typing term names will do a live search of terms with the name you are typing AND possess child terms.
 7. Switch them!

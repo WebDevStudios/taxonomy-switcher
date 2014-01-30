@@ -40,7 +40,7 @@ class Taxonomy_Switcher_UI {
 		$this->admin_title = __( 'Taxonomy Switcher', 'wds' );
 		$this->admin_slug = 'taxonomy-switcher';
 
-		$this->options_page = add_options_page( $this->admin_title, $this->admin_title, 'manage_options', $this->admin_slug, array(
+		$this->options_page = add_management_page( $this->admin_title, $this->admin_title, 'manage_options', $this->admin_slug, array(
 			$this,
 			'do_page'
 		) );
