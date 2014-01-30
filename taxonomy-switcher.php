@@ -26,11 +26,15 @@ class Taxonomy_Switcher_Init {
 		} else {
 			// No WP-CLI? Ok, let's add our UI
 			require_once( dirname( __FILE__ ) . '/Taxonomy_Switcher_UI.php' );
-			$Taxonomy_Switcher_UI = new Taxonomy_Switcher_UI();
-			$Taxonomy_Switcher_UI->hooks();
+			$this->ui = new Taxonomy_Switcher_UI();
+			$this->ui->hooks();
 		}
 
 		add_action( 'admin_init', array( $this, 'taxonomy_switcher_init' ) );
+
+		if ( $this->notices = get_option( 'taxonomy-switcher-notices' ) ) {
+			add_action( 'all_admin_notices', array( $this, 'do_admin_notice' ) );
+		}
 
 	}
 
@@ -40,7 +44,6 @@ class Taxonomy_Switcher_Init {
 	 * @since 1.0.0
 	 */
 	public function taxonomy_switcher_init() {
-
 		if ( isset( $_GET[ 'taxonomy_switcher' ] ) && 1 == $_GET[ 'taxonomy_switcher' ] && current_user_can( 'install_plugins' ) ) {
 			if ( isset( $_GET[ 'from_tax' ] ) && !empty( $_GET[ 'from_tax' ] ) && isset( $_GET[ 'to_tax' ] ) && !empty( $_GET[ 'to_tax' ] ) ) {
 
@@ -56,10 +59,13 @@ class Taxonomy_Switcher_Init {
 
 				$taxonomy_switcher = new Taxonomy_Switcher( $from, $to, $parent );
 
-				$this->success_notices = $taxonomy_switcher->admin_convert();
+				$success_notices = $taxonomy_switcher->admin_convert();
 
-				if ( ! empty( $this->success_notices ) ) {
-					add_action( 'all_admin_notices', array( $this, 'do_admin_notice' ) );
+				if ( ! empty( $success_notices ) ) {
+					// Save notices
+					update_option( 'taxonomy-switcher-notices', $success_notices );
+					// Redirect and strip query string
+					wp_redirect( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/options-general.php' ) ) );
 				}
 			}
 		}
@@ -72,7 +78,8 @@ class Taxonomy_Switcher_Init {
 	 * @since 1.0.0
 	 */
 	public function do_admin_notice() {
-		echo '<div id="message" class="updated"><p>'. implode( '</p><p>', $this->success_notices ) .'</p></div>';
+		echo '<div id="message" class="updated"><p>'. implode( '</p><p>', $this->notices ) .'</p></div>';
+		delete_option( 'taxonomy-switcher-notices' );
 	}
 
 }
