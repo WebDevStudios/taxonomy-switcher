@@ -45,15 +45,15 @@ class Taxonomy_Switcher_UI {
 			'do_page'
 		) );
 
-		add_action( 'admin_head-' . $this->options_page, array( $this, 'scripts_styles' ) );
+		add_action( 'admin_head-' . $this->options_page, array( $this, 'js' ) );
 
 	}
 
 	/**
-	 * CSS UI page
+	 * JS for UI page
 	 * @since 1.0.0
 	 */
-	public function scripts_styles() {
+	public function js() {
 
 		wp_enqueue_script( $this->admin_slug, $this->dir_url . 'js/' . $this->admin_slug . '.js', array( 'jquery' ), self::VERSION, true );
 
