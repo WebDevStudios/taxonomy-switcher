@@ -33,6 +33,13 @@ class Taxonomy_Switcher {
 	public $term_ids = array();
 
 	/**
+	 * Array of Notices from conversion
+	 *
+	 * @var array
+	 */
+	public $notices = array();
+
+	/**
 	 * Setup the object
 	 *
 	 * @param null|int $from Taxonomy to switch from
@@ -43,9 +50,11 @@ class Taxonomy_Switcher {
 	 */
 	public function __construct( $from = null, $to = null, $parent = 0 ) {
 
+		$this->is_ui = ( isset( $_GET['page'] ) && 'taxonomy-switcher' == $_GET['page'] );
+
 		if ( null !== $from && null !== $to ) {
-			$this->from = absint( $from );
-			$this->to = absint( $to );
+			$this->from = sanitize_text_field( $from );
+			$this->to = sanitize_text_field( $to );
 
 			if ( !empty( $parent ) ) {
 				$this->parent = absint( $parent );
@@ -63,20 +72,37 @@ class Taxonomy_Switcher {
 
 		$count = $this->count();
 
-		echo sprintf( 'Switching %d terms with the taxonomy \'%s\' to the taxonomy \'%s\'', $count, $this->from, $this->to );
+		$this->notice( sprintf( __( 'Switching %d terms with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count, $this->from, $this->to ) );
 
 		if ( 0 < $this->parent ) {
-			echo sprintf( 'Limiting the switch by the parent term_id of %d', $this->parent );
+			$this->notice( sprintf( __( 'Limiting the switch by the parent term_id of %d', 'wds' ), $this->parent ) );
 		}
 
 		set_time_limit( 0 );
 
 		$this->convert();
 
-		echo 'Taxonomies switched!';
+		$this->notice( __( 'Taxonomies switched!', 'wds' ) );
 
-		die();
+		if ( $this->is_ui ) {
+			return $this->notices;
+		} else {
+			die();
+		}
 
+	}
+
+	/**
+	 * Stores and (maybe) displays notices
+	 *
+	 * @since 1.0.0
+	 */
+	public function notice( $notice ) {
+		// Add to our notices array
+		$this->notices[] = $notice;
+		if ( ! $this->is_ui ) {
+			echo $notice;
+		}
 	}
 
 	/**
