@@ -150,6 +150,14 @@ class Taxonomy_Switcher {
 			WHERE `taxonomy` = %s AND `term_id` IN ( {$term_ids} )
 		", $this->to, $this->from ) );
 
+		if ( 0 < $this->parent ) {
+			$wpdb->query( $wpdb->prepare( "
+				UPDATE `{$wpdb->term_taxonomy}`
+				SET `parent` = 0
+				WHERE `parent` = %d AND `term_id` IN ( {$term_ids} )
+			", $this->parent ) );
+		}
+
 		return true;
 
 	}
