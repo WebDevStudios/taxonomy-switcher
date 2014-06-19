@@ -65,8 +65,8 @@ class Taxonomy_Switcher_Init {
 				if ( ! empty( $success_notices ) ) {
 					// Save notices
 					update_option( 'taxonomy-switcher-notices', $success_notices );
-					// Redirect and strip query string
-					wp_redirect( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/options-general.php' ) ) );
+					// Redirect and strip query string					
+					wp_redirect( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/tools.php' ) ) );
 				}
 			}
 		}
