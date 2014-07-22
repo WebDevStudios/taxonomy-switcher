@@ -3,7 +3,7 @@
 Plugin Name: Taxonomy Switcher
 Plugin URI: https://github.com/WebDevStudios/taxonomy-switcher
 Description: Switches the Taxonomy of terms to a different Taxonomy
-Version: 1.0.0
+Version: 1.0.1
 Author: WebDevStudios
 Author URI: http://webdevstudios.com
 */
@@ -45,31 +45,33 @@ class Taxonomy_Switcher_Init {
 	 * @since 1.0.0
 	 */
 	public function taxonomy_switcher_init() {
-		if ( isset( $_GET[ 'taxonomy_switcher' ] ) && 1 == $_GET[ 'taxonomy_switcher' ] && current_user_can( 'install_plugins' ) ) {
-			if ( isset( $_GET[ 'from_tax' ] ) && !empty( $_GET[ 'from_tax' ] ) && isset( $_GET[ 'to_tax' ] ) && !empty( $_GET[ 'to_tax' ] ) ) {
 
-				require_once( dirname( __FILE__ ) . '/Taxonomy_Switcher.php' );
-
-				$from = sanitize_text_field( $_GET[ 'from_tax' ] );
-				$to = sanitize_text_field( $_GET[ 'to_tax' ] );
-				$parent = 0;
-
-				if ( isset( $_GET[ 'parent' ] ) && !empty( $_GET[ 'parent' ] ) ) {
-					$parent = absint( $_GET[ 'parent' ] );
-				}
-
-				$taxonomy_switcher = new Taxonomy_Switcher( $from, $to, $parent );
-
-				$success_notices = $taxonomy_switcher->admin_convert();
-
-				if ( ! empty( $success_notices ) ) {
-					// Save notices
-					update_option( 'taxonomy-switcher-notices', $success_notices );
-					// Redirect and strip query string
-					wp_redirect( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/options-general.php' ) ) );
-				}
-			}
+		if (
+			! isset( $_GET[ 'taxonomy_switcher' ] )
+			|| 1 != $_GET[ 'taxonomy_switcher' ]
+			|| ! current_user_can( 'install_plugins' )
+			|| ! isset( $_GET[ 'from_tax' ] )
+			|| empty( $_GET[ 'from_tax' ] )
+			|| ! isset( $_GET[ 'to_tax' ] )
+			|| empty( $_GET[ 'to_tax' ] )
+		) {
+			return;
 		}
+
+		require_once( dirname( __FILE__ ) . '/Taxonomy_Switcher.php' );
+
+		$taxonomy_switcher = new Taxonomy_Switcher( $_GET );
+
+		$success_notices = $taxonomy_switcher->admin_convert();
+
+		if ( empty( $success_notices ) ) {
+			return;
+		}
+
+		// Save notices
+		add_option( 'taxonomy-switcher-notices', $success_notices, null, 'no' );
+		// Redirect and strip query string
+		wp_redirect( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/tools.php' ) ) );
 
 	}
 

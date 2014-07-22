@@ -95,6 +95,14 @@ class Taxonomy_Switcher_UI {
 				</tr>
 				<tr valign="top">
 					<th scope="row">
+						<label for="taxonomy-switcher-terms"><?php _e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
+					</th>
+					<td>
+						<input placeholder="1,2,13" class="regular-text" type="text" id="taxonomy-switcher-terms" name="terms" value="<?php echo isset( $_GET[ 'terms' ] ) ? esc_attr( $_GET[ 'terms' ] ) : ''; ?>">
+					</td>
+				</tr>
+				<tr valign="top">
+					<th scope="row">
 						<label for="taxonomy-switcher-parent"><?php _e( 'Limit taxomoy switch for child terms of a specific parent', 'wds' ); ?></label>
 					</th>
 					<td>

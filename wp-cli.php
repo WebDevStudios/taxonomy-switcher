@@ -5,58 +5,76 @@
  */
 class Taxonomy_Switcher_Command extends WP_CLI_Command {
 
-	public function __construct() {
+	public function __construct() {}
 
-	}
-
-    /**
-     * Switch terms from one taxonomy to another.
-     *
-     * ## OPTIONS
-     *
-     * --from=<taxonomy>
-     * : The Taxonomy to switch from.
-     *
-     * --to=<taxonomy>
-     * : The Taxonomy to switch to.
-     *
-     * [--parent=<parent>]
-     * : The term parent to limit by.
-     *
-     * ## EXAMPLES
-     *
-     *     wp taxonomy-switcher convert --from=category --to=region
-     *     wp taxonomy-switcher convert --from=category --to=region --parent=123
-     *
-     * @synopsis --from=<taxonomy> --to=<taxonomy> [--parent=<parent>]
-     */
+	/**
+	 * Switch terms from one taxonomy to another.
+	 *
+	 * ## OPTIONS
+	 *
+	 * --from=<taxonomy>
+	 * : The Taxonomy to switch from.
+	 *
+	 * --to=<taxonomy>
+	 * : The Taxonomy to switch to.
+	 *
+	 * [--parent=<parent>]
+	 * : The term parent to limit by.
+	 *
+	 * [--terms=<terms>]
+	 * : Comma separated list of term ids to switch.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     wp taxonomy-switcher convert --from=category --to=post_tag
+	 *     wp taxonomy-switcher convert --from=category --to=post_tag --parent=123
+	 *     wp taxonomy-switcher convert --from=category --to=post_tag --terms=1,2,13
+	 *
+	 * @synopsis --from=<taxonomy> --to=<taxonomy> [--parent=<parent>] [--terms=<terms>]
+	 */
 	public function convert( $args, $assoc_args ) {
 
-		$from = $assoc_args[ 'from' ];
-		$to = $assoc_args[ 'to' ];
+		$args = $this->map_arg_names( $assoc_args );
+		$tax_switcher = new Taxonomy_Switcher( $this->map_arg_names( $assoc_args ) );
 
-		$parent = 0;
+		$count = $tax_switcher->count();
 
-		if ( isset( $assoc_args[ 'parent' ] ) ) {
-			$parent = absint( $assoc_args[ 'parent' ] );
+		if ( ! $count ) {
+			WP_CLI::error( $tax_switcher->notices( 'no_terms' ) );
 		}
 
-		$taxonomy_switcher = new Taxonomy_Switcher( $from, $to, $parent );
+		WP_CLI::log( $tax_switcher->notices( 'switching' ) );
 
-		$count = $taxonomy_switcher->count();
+		if ( 0 < $tax_switcher->parent ) {
+			WP_CLI::log( $tax_switcher->notices( 'limit_by_parent' ) );
+		}
 
-		WP_CLI::log( sprintf( 'Switching %d terms with the taxonomy \'%s\' to the taxonomy \'%s\'', $count, $from, $to ) );
-
-		if ( 0 < $parent ) {
-			WP_CLI::log( sprintf( 'Limiting the switch by the parent term_id of %d', $parent ) );
+		if ( ! empty( $tax_switcher->terms ) ) {
+			WP_CLI::log( $tax_switcher->notices( 'limit_by_terms' ) );
 		}
 
 		set_time_limit( 0 );
 
-		$taxonomy_switcher->convert();
+		$tax_switcher->convert();
 
-		WP_CLI::log( 'Taxonomies switched!' );
+		WP_CLI::success( $tax_switcher->notices( 'switched' ) );
 
+	}
+
+	protected function map_arg_names( $args ) {
+		$tomap = array(
+			'to' => 'to_tax',
+			'from' => 'from_tax',
+		);
+		$newargs = array();
+		foreach ( $args as $key => $value ) {
+			if ( array_key_exists( $key, $tomap ) ) {
+		 		$newargs[ $tomap[ $key ] ] = $value;
+			} else {
+				$newargs[ $key ] = $value;
+			}
+		}
+		return $newargs;
 	}
 
 }
