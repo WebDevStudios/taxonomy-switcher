@@ -26,6 +26,13 @@ class Taxonomy_Switcher {
 	public $parent = 0;
 
 	/**
+	 * Array of term IDs to convert
+	 *
+	 * @var array
+	 */
+	public $terms = array();
+
+	/**
 	 * Array of Term IDs to convert
 	 *
 	 * @var array
@@ -40,26 +47,45 @@ class Taxonomy_Switcher {
 	public $notices = array();
 
 	/**
+	 * Array of Error/Success messages
+	 *
+	 * @var array
+	 */
+	public $messages = array();
+
+	/**
 	 * Setup the object
 	 *
-	 * @param null|int $from Taxonomy to switch from
-	 * @param null|int $to Taxonomy to switch to
-	 * @param int $parent Parent term_id to limit by
+	 * @param array $args Arguments containing from taxonomy, to taxonomy,
+	 *                    and additional optional params
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct( $from = null, $to = null, $parent = 0 ) {
+	public function __construct( $args = array() ) {
+
+		$args = wp_parse_args( $args, array(
+			'from_tax' => '',
+			'to_tax' => '',
+			'parent' => '',
+			'terms' => '',
+		) );
+
+		if ( ! $args[ 'from_tax' ] || ! $args[ 'to_tax' ] ) {
+			return;
+		}
+
+		if ( !empty( $args[ 'parent' ] ) ) {
+			$this->parent = absint( $args[ 'parent' ] );
+		}
+
+		if ( !empty( $args[ 'terms' ] ) ) {
+			$this->terms = wp_parse_id_list( $args[ 'terms' ] );
+		}
 
 		$this->is_ui = ( isset( $_GET['page'] ) && 'taxonomy-switcher' == $_GET['page'] );
 
-		if ( null !== $from && null !== $to ) {
-			$this->from = sanitize_text_field( $from );
-			$this->to = sanitize_text_field( $to );
-
-			if ( !empty( $parent ) ) {
-				$this->parent = absint( $parent );
-			}
-		}
+		$this->from = sanitize_text_field( $args[ 'from_tax' ] );
+		$this->to = sanitize_text_field( $args[ 'to_tax' ] );
 
 	}
 
@@ -72,17 +98,23 @@ class Taxonomy_Switcher {
 
 		$count = $this->count();
 
-		$this->notice( sprintf( __( 'Switching %d terms with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count, $this->from, $this->to ) );
+		if ( ! $count && $this->is_ui ) {
+			return $this->notice( $this->notices( 'no_terms' ) );
+		}
+
+		$this->notice( $this->notices( 'switching' ) );
 
 		if ( 0 < $this->parent ) {
-			$this->notice( sprintf( __( 'Limiting the switch by the parent term_id of %d', 'wds' ), $this->parent ) );
+			$this->notice( $this->notices( 'limit_by_parent' ) );
+		} elseif ( ! empty( $this->terms ) ) {
+			$this->notice( $this->notices( 'limit_by_terms' ) );
 		}
 
 		set_time_limit( 0 );
 
 		$this->convert();
 
-		$this->notice( __( 'Taxonomies switched!', 'wds' ) );
+		$this->notice( $this->notices( 'switched' ) );
 
 		if ( $this->is_ui ) {
 			return $this->notices;
@@ -103,6 +135,24 @@ class Taxonomy_Switcher {
 		if ( ! $this->is_ui ) {
 			echo $notice;
 		}
+		return $this->notices;
+	}
+
+	public function notices( $key ) {
+		if ( ! empty( $this->messages ) ) {
+			return $this->messages[ $key ];
+		}
+
+		$count = $this->count();
+		$count_name = sprintf( _n( '1 term', '%d terms', $count, 'wds' ), $count );
+		$this->messages = array(
+			'no_terms' => __( 'No terms to be switched. Check if the term exists in your "from" taxonomy.', 'wds' ) ,
+			'switching' => sprintf( __( 'Switching %s with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count_name, $this->from, $this->to ) ,
+			'limit_by_parent' => sprintf( __( 'Limiting the switch by the parent term_id of %d', 'wds' ), $this->parent ) ,
+			'limit_by_terms' => sprintf( __( 'Limiting the switch to these terms: %s', 'wds' ), implode(', ', $this->terms ) ) ,
+			'switched' => sprintf( __( 'Taxonomies switched for %s!', 'wds' ), $count_name ) ,
+		);
+		return $this->messages[ $key ];
 	}
 
 	/**
@@ -115,11 +165,12 @@ class Taxonomy_Switcher {
 
 		$args = array(
 			'hide_empty' => false,
-			'fields' => 'ids',
-			'child_of' => $this->parent
+			'fields'     => 'ids',
+			'child_of'   => $this->parent,
+			'include'    => $this->terms,
 		);
 
-		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, $this->parent );
+		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, array( 'parent' => $this->parent, 'terms' => $this->terms ) );
 
 		$terms = get_terms( $this->from, $args );
 

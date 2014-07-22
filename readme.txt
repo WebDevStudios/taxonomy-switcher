@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: taxonomy, taxonomies, term, terms, category, categories, convert, converter, tag, tags, custom taxonomy, custom taxonomies, switch taxonomies
 Requires at least: 3.5
 Tested up to: 3.8.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 
@@ -20,8 +20,7 @@ Plugin also has built-in support for [WP-CLI](http://wp-cli.org/). In the comman
 
 ### Notes
 
-Please keep in mind, if parent term isn't set, it will default to zero, which will migrate *all* terms for that taxonomy to the new taxonomy.
-
+Please keep in mind, if parent isn't set, or you don't specify a comma-separated list of term ids to migrate, it will migrate *all* terms for that taxonomy to the new taxonomy.
 
 == Installation ==
 
@@ -30,7 +29,7 @@ Please keep in mind, if parent term isn't set, it will default to zero, which wi
 3. Activate the plugin through the 'Plugins' menu in WordPress
 4. Navigate to the 'Taxonomy Switcher' admin page. You'll find the menu item under the 'Tools' menu item on the left.
 5. Select your "From", and "To" Taxonomies.
-6. Optionally select a parent term to limit terms to switch. Typing term names will do a live search of terms with the name you are typing AND possess child terms.
+6. **a)** Optionally select a parent term to limit terms to switch. Typing term names will do a live search of terms with the name you are typing AND possess child terms. **OR** **b)** Add a comma-separated list of term ids to switch.
 7. Switch them!
 
 == Frequently Asked Questions ==
@@ -43,10 +42,16 @@ Please keep in mind, if parent term isn't set, it will default to zero, which wi
 
 == Changelog ==
 
+= 1.0.1 =
+* Add ability to switch comma-separated list of term IDs.
+
 = 1.0.0 =
 * Release
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+* Add ability to switch comma-separated list of term IDs.
 
 = 1.0.0 =
 * Release
