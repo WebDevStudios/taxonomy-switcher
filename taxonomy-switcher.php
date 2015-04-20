@@ -3,7 +3,7 @@
 Plugin Name: Taxonomy Switcher
 Plugin URI: https://github.com/WebDevStudios/taxonomy-switcher
 Description: Switches the Taxonomy of terms to a different Taxonomy
-Version: 1.0.1
+Version: 1.0.2
 Author: WebDevStudios
 Author URI: http://webdevstudios.com
 */
@@ -71,7 +71,7 @@ class Taxonomy_Switcher_Init {
 		// Save notices
 		add_option( 'taxonomy-switcher-notices', $success_notices, null, 'no' );
 		// Redirect and strip query string
-		wp_redirect( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/tools.php' ) ) );
+		wp_redirect( esc_url_raw( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/tools.php' ) ) ) );
 
 	}
 

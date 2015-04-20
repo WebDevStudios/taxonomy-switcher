@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: taxonomy, taxonomies, term, terms, category, categories, convert, converter, tag, tags, custom taxonomy, custom taxonomies, switch taxonomies
 Requires at least: 3.5
 Tested up to: 3.8.1
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 
@@ -41,6 +41,9 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 2. Live-searching for a parent term
 
 == Changelog ==
+
+= 1.0.2 =
+* Update for xss vulnerability, https://make.wordpress.org/plugins/2015/04/20/fixing-add_query_arg-and-remove_query_arg-usage
 
 = 1.0.1 =
 * Add ability to switch comma-separated list of term IDs.

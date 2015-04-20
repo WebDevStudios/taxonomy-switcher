@@ -22,6 +22,9 @@ Compatible with [wp-cli](http://wp-cli.org/). `wp taxonomy-switcher` for instruc
 
 ## Changelog
 
+#### 1.0.2
+* Update for xss vulnerability, https://make.wordpress.org/plugins/2015/04/20/fixing-add_query_arg-and-remove_query_arg-usage
+
 #### 1.0.1
 * Add ability to switch comma-separated list of term IDs.
 
