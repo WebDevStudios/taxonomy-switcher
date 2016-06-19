@@ -42,6 +42,13 @@ class Taxonomy_Switcher_UI {
 	public $options_page = '';
 
 	/**
+	 * Array of registered taxonomies.
+	 *
+	 * @var array
+	 */
+	public $registered_taxonomies = array();
+
+	/**
 	 * Setup some vars.
 	 *
 	 * @since 1.0.0
