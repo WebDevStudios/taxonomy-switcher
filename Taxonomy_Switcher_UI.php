@@ -117,7 +117,7 @@ class Taxonomy_Switcher_UI {
 			<table class="form-table">
 				<tbody>
 				<tr valign="top">
-					<th scope="row"><label for="from_tax"><?php _e( 'Taxonomy to switch from:', 'wds' ); ?></label></th>
+					<th scope="row"><label for="from_tax"><?php esc_html_e( 'Taxonomy to switch from:', 'wds' ); ?></label></th>
 					<td>
 						<select name="from_tax" id="from_tax">
 							<?php $this->fill_options( 'from_tax' ); ?>
@@ -125,7 +125,7 @@ class Taxonomy_Switcher_UI {
 					</td>
 				</tr>
 				<tr valign="top">
-					<th scope="row"><label for="to_tax"><?php _e( 'Taxonomy to switch to:', 'wds' ); ?></label></th>
+					<th scope="row"><label for="to_tax"><?php esc_html_e( 'Taxonomy to switch to:', 'wds' ); ?></label></th>
 					<td>
 						<select name="to_tax" id="to_tax">
 							<?php $this->fill_options( 'to_tax' ); ?>
@@ -134,7 +134,7 @@ class Taxonomy_Switcher_UI {
 				</tr>
 				<tr valign="top">
 					<th scope="row">
-						<label for="taxonomy-switcher-terms"><?php _e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
+						<label for="taxonomy-switcher-terms"><?php esc_html_e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
 					</th>
 					<td>
 						<input placeholder="1,2,13" class="regular-text" type="text" id="taxonomy-switcher-terms" name="terms" value="<?php echo isset( $_GET[ 'terms' ] ) ? esc_attr( $_GET[ 'terms' ] ) : ''; ?>">
@@ -142,14 +142,14 @@ class Taxonomy_Switcher_UI {
 				</tr>
 				<tr valign="top">
 					<th scope="row">
-						<label for="taxonomy-switcher-parent"><?php _e( 'Limit taxomoy switch for child terms of a specific parent', 'wds' ); ?></label>
+						<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxomoy switch for child terms of a specific parent', 'wds' ); ?></label>
 					</th>
 					<td>
 						<input class="regular-text" type="text" id="taxonomy-switcher-parent" name="parent" value="<?php echo isset( $_GET[ 'parent' ] ) ? esc_attr( $_GET[ 'parent' ] ) : ''; ?>" placeholder="<?php _e( 'Type to Search for Term Parent', 'wds' ); ?>">
 
 						<p class="taxonomy-switcher-spinner spinner"></p>
 
-						<p class="taxonomy-switcher-ajax-results-help" style="display:none;"><?php _e( 'Select a term:', 'wds' ); ?></p>
+						<p class="taxonomy-switcher-ajax-results-help" style="display:none;"><?php esc_html_e( 'Select a term:', 'wds' ); ?></p>
 
 						<div class="taxonomy-switcher-ajax-results-posts"></div>
 					</td>
