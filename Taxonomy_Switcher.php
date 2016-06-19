@@ -157,11 +157,11 @@ class Taxonomy_Switcher {
 		$count = $this->count();
 		$count_name = sprintf( _n( '1 term', '%d terms', $count, 'wds' ), $count );
 		$this->messages = array(
-			'no_terms' => __( 'No terms to be switched. Check if the term exists in your "from" taxonomy.', 'wds' ) ,
-			'switching' => sprintf( __( 'Switching %s with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count_name, $this->from, $this->to ) ,
-			'limit_by_parent' => sprintf( __( 'Limiting the switch by the parent term_id of %d', 'wds' ), $this->parent ) ,
-			'limit_by_terms' => sprintf( __( 'Limiting the switch to these terms: %s', 'wds' ), implode(', ', $this->terms ) ) ,
-			'switched' => sprintf( __( 'Taxonomies switched for %s!', 'wds' ), $count_name ) ,
+			'no_terms' => __( 'No terms to be switched. Check if the term exists in your "from" taxonomy.', 'wds' ),
+			'switching' => sprintf( __( 'Switching %s with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count_name, $this->from, $this->to ),
+			'limit_by_parent' => sprintf( __( 'Limiting the switch by the parent term_id of %d', 'wds' ), $this->parent ),
+			'limit_by_terms' => sprintf( __( 'Limiting the switch to these terms: %s', 'wds' ), implode( ', ', $this->terms ) ),
+			'switched' => sprintf( __( 'Taxonomies switched for %s!', 'wds' ), $count_name ),
 		);
 		return $this->messages[ $key ];
 	}
