@@ -1,7 +1,6 @@
 <?php
 /**
- * Implements Taxonomy Switcher command for WP-CLI
- *
+ * Implements Taxonomy Switcher command for WP-CLI.
  */
 class Taxonomy_Switcher_Command extends WP_CLI_Command {
 
@@ -31,6 +30,8 @@ class Taxonomy_Switcher_Command extends WP_CLI_Command {
 	 *     wp taxonomy-switcher convert --from=category --to=post_tag --terms=1,2,13
 	 *
 	 * @synopsis --from=<taxonomy> --to=<taxonomy> [--parent=<parent>] [--terms=<terms>]
+	 * @param array $args Args.
+	 * @param array $assoc_args Args.
 	 */
 	public function convert( $args, $assoc_args ) {
 
@@ -76,7 +77,6 @@ class Taxonomy_Switcher_Command extends WP_CLI_Command {
 		}
 		return $newargs;
 	}
-
 }
 
 WP_CLI::add_command( 'taxonomy-switcher', 'Taxonomy_Switcher_Command' );
