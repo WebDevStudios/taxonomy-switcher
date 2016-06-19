@@ -50,7 +50,7 @@ class Taxonomy_Switcher_UI {
 
 		global $wp_version;
 
-		$this->not_37 = !version_compare( $wp_version, '3.7' ) >= 0;
+		$this->not_37 = ! version_compare( $wp_version, '3.7' ) >= 0;
 		$this->dir_url = plugins_url( '/', __FILE__ );
 
 	}
@@ -79,7 +79,7 @@ class Taxonomy_Switcher_UI {
 
 		$this->options_page = add_management_page( $this->admin_title, $this->admin_title, 'manage_options', $this->admin_slug, array(
 			$this,
-			'do_page'
+			'do_page',
 		) );
 
 		add_action( 'admin_head-' . $this->options_page, array( $this, 'js' ) );
@@ -186,8 +186,8 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function ajax_term_results() {
 
-		// verify our nonce, and required data
-		if ( !( isset( $_REQUEST[ 'nonce' ], $_REQUEST[ 'search' ] ) && wp_verify_nonce( $_REQUEST[ 'nonce' ], __FILE__ ) ) ) {
+		// Verify our nonce, and required data.
+		if ( ! ( isset( $_REQUEST[ 'nonce' ], $_REQUEST[ 'search' ] ) && wp_verify_nonce( $_REQUEST[ 'nonce' ], __FILE__ ) ) ) {
 			$this->send_error( __LINE__, __( 'security check failed', 'wds' ) );
 		}
 
@@ -205,24 +205,24 @@ class Taxonomy_Switcher_UI {
 		// do term search
 		$terms = $this->get_terms( $search_string, $taxonomy );
 
-		// No terms, bail
-		if ( !$terms ) {
+		// No terms, bail.
+		if ( ! $terms ) {
 			$this->send_error( __LINE__ );
 		}
 
 		// loop found terms and concatenate list items
 		$items = $this->get_list_items( $terms );
 
-		if ( !$items ) {
-			// do more extensive term search
+		if ( ! $items ) {
+			// Do more extensive term search.
 			$terms = $this->get_terms( $search_string, $taxonomy, 30 );
 
 			// loop found terms and concatenate list items
 			$items = $this->get_list_items( $terms );
 		}
 
-		// No items, bail
-		if ( !$items ) {
+		// No items, bail.
+		if ( ! $items ) {
 			$this->send_error( __LINE__, __( 'No terms found with children.', 'wds' ) );
 		}
 
@@ -249,7 +249,7 @@ class Taxonomy_Switcher_UI {
 		wp_send_json_error( array(
 			'html' => '<ul><li>' . $msg . '</li></ul>',
 			'line' => $line,
-			'$_REQUEST' => $_REQUEST
+			'$_REQUEST' => $_REQUEST,
 		) );
 
 	}
@@ -275,7 +275,7 @@ class Taxonomy_Switcher_UI {
 			'number' => absint( $number ),
 			'name__like' => $search_string,
 			'cache_domain' => 'taxonomy_switch_search2',
-			'get' => 'all'
+			'get' => 'all',
 		) );
 
 		remove_filter( 'terms_clauses', array( $this, 'wilcard_term_name' ) );
@@ -301,11 +301,11 @@ class Taxonomy_Switcher_UI {
 			// Check if this term has child terms
 			$children = get_terms( $term->taxonomy, array(
 				'parent' => $term->term_id,
-				'hide_empty' => false
+				'hide_empty' => false,
 			) );
 
-			// If no child terms to convert, bail
-			if ( !$children ) {
+			// If no child terms to convert, bail.
+			if ( ! $children ) {
 				continue;
 			}
 
@@ -330,11 +330,9 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function wilcard_term_name( $clauses ) {
 
-		// add wildcard flag to beginning of term
-		$clauses[ 'where' ] = str_replace( "name LIKE '", "name LIKE '%", $clauses[ 'where' ] );
+		// Add wildcard flag to beginning of term.
+		$clauses['where'] = str_replace( "name LIKE '", "name LIKE '%", $clauses['where'] );
 
 		return $clauses;
-
 	}
-
 }
