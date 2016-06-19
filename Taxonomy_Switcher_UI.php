@@ -56,7 +56,8 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Peform our UI admin page hooks
+	 * Peform our UI admin page hooks.
+	 *
 	 * @since  1.0.0
 	 */
 	public function hooks() {
@@ -67,7 +68,8 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Add menu item/ui page
+	 * Add menu item/ui page.
+	 *
 	 * @since 1.0.0
 	 */
 	public function add_page() {
@@ -85,7 +87,8 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * JS for UI page
+	 * JS for UI page.
+	 *
 	 * @since 1.0.0
 	 */
 	public function js() {
@@ -95,7 +98,8 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Taxonomy Switcher UI admin page
+	 * Taxonomy Switcher UI admin page.
+	 *
 	 * @since 1.0.0
 	 */
 	public function do_page() {
@@ -159,10 +163,11 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Fill select <option>s with all taxonomies
-	 * @since  1.0.0
+	 * Fill select <option>s with all taxonomies.
 	 *
-	 * @param  string $name name of select
+	 * @since 1.0.0
+	 *
+	 * @param string $name Name of select.
 	 */
 	public function fill_options( $name ) {
 
@@ -175,8 +180,9 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Ajax handler for term search
-	 * @since  1.0.0
+	 * Ajax handler for term search.
+	 *
+	 * @since 1.0.0
 	 */
 	public function ajax_term_results() {
 
@@ -229,11 +235,12 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * wp_send_json_error wrapper method
-	 * @since  1.0.0
+	 * The wp_send_json_error wrapper method.
 	 *
-	 * @param  string $line Line number of error
-	 * @param  string $msg Message to send
+	 * @since 1.0.0
+	 *
+	 * @param string $line Line number of error.
+	 * @param string $msg  Message to send.
 	 */
 	public function send_error( $line, $msg = '' ) {
 
@@ -248,14 +255,14 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Get the terms for our query
-	 * @since  1.0.0
+	 * Get the terms for our query.
 	 *
-	 * @param  string $search_string Search query
-	 * @param  string $taxonomy Taxonomy slug
-	 * @param  integer $number Number of results to grab
+	 * @since 1.0.0
 	 *
-	 * @return mixed                  Array of terms or false
+	 * @param string  $search_string Search query.
+	 * @param string  $taxonomy      Taxonomy slug.
+	 * @param integer $number        Number of results to grab.
+	 * @return mixed Array of terms or false.
 	 */
 	public function get_terms( $search_string, $taxonomy, $number = 10 ) {
 
@@ -278,12 +285,12 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Loops terms and builds list item strings (if terms have children)
-	 * @since  1.0.0
+	 * Loops terms and builds list item strings (if terms have children).
 	 *
-	 * @param  array $terms Array of term objects
+	 * @since 1.0.0
 	 *
-	 * @return string        List item markup on success
+	 * @param array $terms Array of term objects.
+	 * @return string List item markup on success.
 	 */
 	public function get_list_items( $terms ) {
 
@@ -314,12 +321,12 @@ class Taxonomy_Switcher_UI {
 	}
 
 	/**
-	 * Make term search wildcard on front as well as back
-	 * @since  1.0.0
+	 * Make term search wildcard on front as well as back.
 	 *
-	 * @param  string $clauses Query clauses
+	 * @since 1.0.0
 	 *
-	 * @return string           Modified query clauses
+	 * @param string $clauses Query clauses.
+	 * @return string Modified query clauses.
 	 */
 	public function wilcard_term_name( $clauses ) {
 
