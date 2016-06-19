@@ -187,7 +187,7 @@ class Taxonomy_Switcher {
 
 		$this->term_ids = array();
 
-		if ( !is_wp_error( $terms ) && !empty( $terms ) ) {
+		if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
 			$this->term_ids = $terms;
 		}
 
@@ -247,7 +247,5 @@ class Taxonomy_Switcher {
 		}
 
 		return true;
-
 	}
-
 }
