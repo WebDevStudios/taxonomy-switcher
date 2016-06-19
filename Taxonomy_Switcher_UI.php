@@ -145,7 +145,7 @@ class Taxonomy_Switcher_UI {
 						<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxonomy switch for child terms of a specific parent', 'wds' ); ?></label>
 					</th>
 					<td>
-						<input class="regular-text" type="text" id="taxonomy-switcher-parent" name="parent" value="<?php echo isset( $_GET[ 'parent' ] ) ? esc_attr( $_GET[ 'parent' ] ) : ''; ?>" placeholder="<?php _e( 'Type to Search for Term Parent', 'wds' ); ?>">
+						<input class="regular-text" type="text" id="taxonomy-switcher-parent" name="parent" value="<?php echo isset( $_GET[ 'parent' ] ) ? esc_attr( $_GET[ 'parent' ] ) : ''; ?>" placeholder="<?php _e( 'Start typing to search for a term parent', 'wds' ); ?>">
 
 						<p class="taxonomy-switcher-spinner spinner"></p>
 
