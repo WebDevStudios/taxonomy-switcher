@@ -4,6 +4,9 @@
  */
 class Taxonomy_Switcher_Command extends WP_CLI_Command {
 
+	/**
+	 * Taxonomy_Switcher_Command constructor.
+	 */
 	public function __construct() {}
 
 	/**
@@ -62,6 +65,14 @@ class Taxonomy_Switcher_Command extends WP_CLI_Command {
 
 	}
 
+	/**
+	 * Map args to a new array.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param array $args Array of args to map.
+	 * @return array
+	 */
 	protected function map_arg_names( $args ) {
 		$tomap = array(
 			'to' => 'to_tax',
