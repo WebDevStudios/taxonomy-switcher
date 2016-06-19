@@ -113,13 +113,13 @@ class Taxonomy_Switcher_UI {
 
 		$this->registered_taxonomies = get_taxonomies( array(), 'objects' );
 ?>
-	<div class="wrap <?php echo $this->admin_slug; ?>">
-		<h2><?php echo $this->admin_title; ?></h2>
+	<div class="wrap <?php echo esc_attr( $this->admin_slug ); ?>">
+		<h2><?php echo esc_html( $this->admin_title ); ?></h2>
 
 		<form method="get">
 			<?php wp_nonce_field( __FILE__, 'taxonomy_switcher_nonce' ); ?>
 			<input type="hidden" name="taxonomy_switcher" value="1" />
-			<input type="hidden" name="page" value="<?php echo $this->admin_slug; ?>" />
+			<input type="hidden" name="page" value="<?php echo esc_attr( $this->admin_slug ); ?>" />
 
 			<table class="form-table">
 				<tbody>
@@ -181,7 +181,7 @@ class Taxonomy_Switcher_UI {
 		$current = isset( $_GET[ $name ] ) ? $_GET[ $name ] : false;
 
 		foreach ( $this->registered_taxonomies as $slug => $tax_object ) {
-			echo '<option value="' . $slug . '" ' . selected( $slug, $current, false ) . '>' . $tax_object->labels->name . '</option>';
+			echo '<option value="' . esc_attr( $slug ) . '" ' . selected( $slug, $current, false ) . '>' . $tax_object->labels->name . '</option>';
 		}
 
 	}
