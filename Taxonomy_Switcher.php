@@ -54,12 +54,12 @@ class Taxonomy_Switcher {
 	public $messages = array();
 
 	/**
-	 * Setup the object
-	 *
-	 * @param array $args Arguments containing from taxonomy, to taxonomy,
-	 *                    and additional optional params
+	 * Setup the object.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param array $args Arguments containing from taxonomy, to taxonomy,
+	 *                    and additional optional params.
 	 */
 	public function __construct( $args = array() ) {
 
@@ -125,12 +125,15 @@ class Taxonomy_Switcher {
 	}
 
 	/**
-	 * Stores and (maybe) displays notices
+	 * Stores and (maybe) displays notices.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @param string $notice Notice to store and/or display.
+	 * @return array
 	 */
 	public function notice( $notice ) {
-		// Add to our notices array
+		// Add to our notices array.
 		$this->notices[] = $notice;
 		if ( ! $this->is_ui ) {
 			echo $notice;
@@ -138,6 +141,14 @@ class Taxonomy_Switcher {
 		return $this->notices;
 	}
 
+	/**
+	 * Compile our notices.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param string $key Array key to retrieve.
+	 * @return mixed
+	 */
 	public function notices( $key ) {
 		if ( ! empty( $this->messages ) ) {
 			return $this->messages[ $key ];
