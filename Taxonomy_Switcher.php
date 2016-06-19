@@ -70,22 +70,22 @@ class Taxonomy_Switcher {
 			'terms' => '',
 		) );
 
-		if ( ! $args[ 'from_tax' ] || ! $args[ 'to_tax' ] ) {
+		if ( ! $args['from_tax'] || ! $args['to_tax'] ) {
 			return;
 		}
 
-		if ( !empty( $args[ 'parent' ] ) ) {
-			$this->parent = absint( $args[ 'parent' ] );
+		if ( ! empty( $args['parent'] ) ) {
+			$this->parent = absint( $args['parent'] );
 		}
 
-		if ( !empty( $args[ 'terms' ] ) ) {
-			$this->terms = wp_parse_id_list( $args[ 'terms' ] );
+		if ( ! empty( $args['terms'] ) ) {
+			$this->terms = wp_parse_id_list( $args['terms'] );
 		}
 
 		$this->is_ui = ( isset( $_GET['page'] ) && 'taxonomy-switcher' == $_GET['page'] );
 
-		$this->from = sanitize_text_field( $args[ 'from_tax' ] );
-		$this->to = sanitize_text_field( $args[ 'to_tax' ] );
+		$this->from = sanitize_text_field( $args['from_tax'] );
+		$this->to = sanitize_text_field( $args['to_tax'] );
 
 	}
 
