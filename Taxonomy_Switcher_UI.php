@@ -191,18 +191,18 @@ class Taxonomy_Switcher_UI {
 			$this->send_error( __LINE__, __( 'security check failed', 'wds' ) );
 		}
 
-		// set taxonomy
+		// Set taxonomy.
 		$taxonomy = isset( $_REQUEST[ 'tax_name' ] ) ? $_REQUEST[ 'tax_name' ] : 'category';
 
-		// sanitize our search string
+		// Sanitize our search string.
 		$search_string = sanitize_text_field( $_REQUEST[ 'search' ] );
 
-		// No search string, bail
+		// No search string, bail.
 		if ( empty( $search_string ) ) {
 			$this->send_error( __LINE__, __( 'Please Try Again', 'wds' ) );
 		}
 
-		// do term search
+		// Do term search.
 		$terms = $this->get_terms( $search_string, $taxonomy );
 
 		// No terms, bail.
@@ -210,14 +210,14 @@ class Taxonomy_Switcher_UI {
 			$this->send_error( __LINE__ );
 		}
 
-		// loop found terms and concatenate list items
+		// Loop found terms and concatenate list items.
 		$items = $this->get_list_items( $terms );
 
 		if ( ! $items ) {
 			// Do more extensive term search.
 			$terms = $this->get_terms( $search_string, $taxonomy, 30 );
 
-			// loop found terms and concatenate list items
+			// Loop found terms and concatenate list items.
 			$items = $this->get_list_items( $terms );
 		}
 
@@ -226,10 +226,10 @@ class Taxonomy_Switcher_UI {
 			$this->send_error( __LINE__, __( 'No terms found with children.', 'wds' ) );
 		}
 
-		// Build our ordered list
+		// Build our ordered list.
 		$return = sprintf( '<ol>%s</ol>', $items );
 
-		// send back our encoded data
+		// Send back our encoded data.
 		wp_send_json_success( array( 'html' => $return ) );
 
 	}
@@ -267,10 +267,10 @@ class Taxonomy_Switcher_UI {
 	public function get_terms( $search_string, $taxonomy, $number = 10 ) {
 
 		if ( $this->not_37 ) {
-			// add our term clause filter for this iteration (if < than 3.7)
+			// Add our term clause filter for this iteration (if < than 3.7).
 			add_filter( 'terms_clauses', array( $this, 'wilcard_term_name' ) );
 		}
-		// do term search
+		// Do term search.
 		$terms = get_terms( $taxonomy, array(
 			'number' => absint( $number ),
 			'name__like' => $search_string,
@@ -294,11 +294,11 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function get_list_items( $terms ) {
 
-		// loop found terms and concatenate list items
+		// Loop found terms and concatenate list items.
 		$items = '';
 
 		foreach ( $terms as $term ) {
-			// Check if this term has child terms
+			// Check if this term has child terms.
 			$children = get_terms( $term->taxonomy, array(
 				'parent' => $term->term_id,
 				'hide_empty' => false,
@@ -309,7 +309,7 @@ class Taxonomy_Switcher_UI {
 				continue;
 			}
 
-			// Add parent term for clarity
+			// Add parent term for clarity.
 			$parent_term = $term->parent ? get_term_by( 'id', $term->parent, $term->taxonomy ) : false;
 			$parent_name = $parent_term ? $parent_term->name . ' &rarr; ' : '';
 
