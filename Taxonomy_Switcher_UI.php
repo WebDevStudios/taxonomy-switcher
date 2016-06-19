@@ -7,7 +7,42 @@ class Taxonomy_Switcher_UI {
 	const VERSION = '1.0.0';
 
 	/**
-	 * Setup some vars
+	 * Whether or not we are on WordPress 3.7.
+	 *
+	 * @var bool
+	 */
+	public $not_37 = false;
+
+	/**
+	 * Directory URL.
+	 *
+	 * @var string
+	 */
+	public $dir_url = '';
+
+	/**
+	 * Admin title.
+	 *
+	 * @var string
+	 */
+	public $admin_title = '';
+
+	/**
+	 * Admin slug.
+	 *
+	 * @var string
+	 */
+	public $admin_slug = '';
+
+	/**
+	 * Options page.
+	 *
+	 * @var string
+	 */
+	public $options_page = '';
+
+	/**
+	 * Setup some vars.
 	 *
 	 * @since 1.0.0
 	 */
