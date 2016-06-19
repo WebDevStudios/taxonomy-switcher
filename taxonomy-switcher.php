@@ -20,12 +20,12 @@ class Taxonomy_Switcher_Init {
 	 */
 	public function __construct() {
 
-		// WP-CLI integration
+		// WP-CLI integration.
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			require_once( dirname( __FILE__ ) . '/Taxonomy_Switcher.php' );
 			require_once( dirname( __FILE__ ) . '/wp-cli.php' );
 		} else {
-			// No WP-CLI? Ok, let's add our UI
+			// No WP-CLI? Ok, let's add our UI.
 			require_once( dirname( __FILE__ ) . '/Taxonomy_Switcher_UI.php' );
 			$this->ui = new Taxonomy_Switcher_UI();
 			$this->ui->hooks();
@@ -68,15 +68,15 @@ class Taxonomy_Switcher_Init {
 			return;
 		}
 
-		// Save notices
+		// Save notices.
 		add_option( 'taxonomy-switcher-notices', $success_notices, null, 'no' );
-		// Redirect and strip query string
+		// Redirect and strip query string.
 		wp_redirect( esc_url_raw( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/tools.php' ) ) ) );
 
 	}
 
 	/**
-	 * Show Notices for taxonomy switch
+	 * Show Notices for taxonomy switch.
 	 *
 	 * @since 1.0.0
 	 */
@@ -84,7 +84,5 @@ class Taxonomy_Switcher_Init {
 		echo '<div id="message" class="updated"><p>'. implode( '</p><p>', $this->notices ) .'</p></div>';
 		delete_option( 'taxonomy-switcher-notices' );
 	}
-
 }
-
 $Taxonomy_Switcher_Init = new Taxonomy_Switcher_Init();
