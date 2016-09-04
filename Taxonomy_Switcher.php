@@ -65,9 +65,9 @@ class Taxonomy_Switcher {
 
 		$args = wp_parse_args( $args, array(
 			'from_tax' => '',
-			'to_tax' => '',
-			'parent' => '',
-			'terms' => '',
+			'to_tax'   => '',
+			'parent'   => '',
+			'terms'    => '',
 		) );
 
 		if ( ! $args['from_tax'] || ! $args['to_tax'] ) {
@@ -85,7 +85,7 @@ class Taxonomy_Switcher {
 		$this->is_ui = ( isset( $_GET['page'] ) && 'taxonomy-switcher' == $_GET['page'] );
 
 		$this->from = sanitize_text_field( $args['from_tax'] );
-		$this->to = sanitize_text_field( $args['to_tax'] );
+		$this->to   = sanitize_text_field( $args['to_tax'] );
 
 	}
 
@@ -154,14 +154,14 @@ class Taxonomy_Switcher {
 			return $this->messages[ $key ];
 		}
 
-		$count = $this->count();
-		$count_name = sprintf( _n( '1 term', '%d terms', $count, 'wds' ), $count );
+		$count          = $this->count();
+		$count_name     = sprintf( _n( '1 term', '%d terms', $count, 'wds' ), $count );
 		$this->messages = array(
-			'no_terms' => __( 'No terms to be switched. Check if the term exists in your "from" taxonomy.', 'wds' ),
-			'switching' => sprintf( __( 'Switching %s with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count_name, $this->from, $this->to ),
+			'no_terms'        => __( 'No terms to be switched. Check if the term exists in your "from" taxonomy.', 'wds' ),
+			'switching'       => sprintf( __( 'Switching %s with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count_name, $this->from, $this->to ),
 			'limit_by_parent' => sprintf( __( 'Limiting the switch by the parent term_id of %d', 'wds' ), $this->parent ),
-			'limit_by_terms' => sprintf( __( 'Limiting the switch to these terms: %s', 'wds' ), implode( ', ', $this->terms ) ),
-			'switched' => sprintf( __( 'Taxonomies switched for %s!', 'wds' ), $count_name ),
+			'limit_by_terms'  => sprintf( __( 'Limiting the switch to these terms: %s', 'wds' ), implode( ', ', $this->terms ) ),
+			'switched'        => sprintf( __( 'Taxonomies switched for %s!', 'wds' ), $count_name ),
 		);
 		return $this->messages[ $key ];
 	}
