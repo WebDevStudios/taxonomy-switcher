@@ -194,7 +194,7 @@ class Taxonomy_Switcher_UI {
 
 		// Verify our nonce, and required data.
 		if ( ! ( isset( $_REQUEST[ 'nonce' ], $_REQUEST[ 'search' ] ) && wp_verify_nonce( $_REQUEST[ 'nonce' ], __FILE__ ) ) ) {
-			$this->send_error( __LINE__, __( 'security check failed', 'wds' ) );
+			$this->send_error( __LINE__, __( 'Security check failed', 'wds' ) );
 		}
 
 		// Set taxonomy.
