@@ -33,7 +33,8 @@ class Taxonomy_Switcher_Init {
 
 		add_action( 'admin_init', array( $this, 'taxonomy_switcher_init' ) );
 
-		if ( $this->notices = get_option( 'taxonomy-switcher-notices' ) ) {
+		$this->notices = get_option( 'taxonomy-switcher-notices' );
+		if ( $this->notices ) {
 			add_action( 'all_admin_notices', array( $this, 'do_admin_notice' ) );
 		}
 
