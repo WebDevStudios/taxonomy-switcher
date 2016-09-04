@@ -1,53 +1,53 @@
 <?php
 /**
- * Class Taxonomy_Switcher
+ * Class Taxonomy_Switcher.
  */
 class Taxonomy_Switcher {
 
 	/**
-	 * Taxonomy to switch from
+	 * Taxonomy to switch from.
 	 *
 	 * @var string
 	 */
 	public $from = '';
 
 	/**
-	 * Taxonomy to switch to
+	 * Taxonomy to switch to.
 	 *
 	 * @var string
 	 */
 	public $to = '';
 
 	/**
-	 * Parent term_id to limit by
+	 * Parent term_id to limit by.
 	 *
 	 * @var int
 	 */
 	public $parent = 0;
 
 	/**
-	 * Array of term IDs to convert
+	 * Array of term IDs to convert.
 	 *
 	 * @var array
 	 */
 	public $terms = array();
 
 	/**
-	 * Array of Term IDs to convert
+	 * Array of term IDs to convert.
 	 *
 	 * @var array
 	 */
 	public $term_ids = array();
 
 	/**
-	 * Array of Notices from conversion
+	 * Array of notices from conversion.
 	 *
 	 * @var array
 	 */
 	public $notices = array();
 
 	/**
-	 * Array of Error/Success messages
+	 * Array of error/success messages.
 	 *
 	 * @var array
 	 */
@@ -90,7 +90,7 @@ class Taxonomy_Switcher {
 	}
 
 	/**
-	 * Convert taxonomy of terms from the Admin
+	 * Convert taxonomy of terms from the Admin.
 	 *
 	 * @since 1.0.0
 	 */
@@ -167,10 +167,11 @@ class Taxonomy_Switcher {
 	}
 
 	/**
-	 * Get term ids based on $from and $parent
+	 * Get term ids based on $from and $parent.
 	 *
-	 * @return array An array of term ids
 	 * @since 1.0.0
+	 *
+	 * @return array An array of term ids.
 	 */
 	public function get_term_ids() {
 
@@ -196,10 +197,11 @@ class Taxonomy_Switcher {
 	}
 
 	/**
-	 * Return the total count of terms found
+	 * Return the total count of terms found.
 	 *
-	 * @return int Total count of terms found
 	 * @since 1.0.0
+	 *
+	 * @return int Total count of terms found.
 	 */
 	public function count() {
 
@@ -212,10 +214,11 @@ class Taxonomy_Switcher {
 	}
 
 	/**
-	 * Convert taxonomy of terms
+	 * Convert taxonomy of terms.
 	 *
-	 * @return bool Whether the conversion was successful
 	 * @since 1.0.0
+	 *
+	 * @return bool Whether the conversion was successful.
 	 */
 	public function convert() {
 
