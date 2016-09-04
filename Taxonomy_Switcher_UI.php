@@ -57,7 +57,7 @@ class Taxonomy_Switcher_UI {
 
 		global $wp_version;
 
-		$this->not_37 = ! version_compare( $wp_version, '3.7' ) >= 0;
+		$this->not_37  = ! version_compare( $wp_version, '3.7' ) >= 0;
 		$this->dir_url = plugins_url( '/', __FILE__ );
 
 	}
@@ -82,7 +82,7 @@ class Taxonomy_Switcher_UI {
 	public function add_page() {
 
 		$this->admin_title = __( 'Taxonomy Switcher', 'wds' );
-		$this->admin_slug = 'taxonomy-switcher';
+		$this->admin_slug  = 'taxonomy-switcher';
 
 		$this->options_page = add_management_page( $this->admin_title, $this->admin_title, 'manage_options', $this->admin_slug, array(
 			$this,
@@ -279,10 +279,10 @@ class Taxonomy_Switcher_UI {
 		}
 		// Do term search.
 		$terms = get_terms( $taxonomy, array(
-			'number' => absint( $number ),
-			'name__like' => $search_string,
+			'number'       => absint( $number ),
+			'name__like'   => $search_string,
 			'cache_domain' => 'taxonomy_switch_search2',
-			'get' => 'all',
+			'get'          => 'all',
 		) );
 
 		remove_filter( 'terms_clauses', array( $this, 'wilcard_term_name' ) );
