@@ -99,9 +99,7 @@ class Taxonomy_Switcher_UI {
 	 * @since 1.0.0
 	 */
 	public function js() {
-
 		wp_enqueue_script( $this->admin_slug, $this->dir_url . 'js/' . $this->admin_slug . '.js', array( 'jquery' ), self::VERSION, true );
-
 	}
 
 	/**
