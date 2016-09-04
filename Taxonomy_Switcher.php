@@ -118,10 +118,9 @@ class Taxonomy_Switcher {
 
 		if ( $this->is_ui ) {
 			return $this->notices;
-		} else {
-			die();
 		}
 
+		die();
 	}
 
 	/**
