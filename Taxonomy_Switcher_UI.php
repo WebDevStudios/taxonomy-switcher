@@ -110,61 +110,62 @@ class Taxonomy_Switcher_UI {
 	public function do_page() {
 
 		$this->registered_taxonomies = get_taxonomies( array(), 'objects' );
-?>
-	<div class="wrap <?php echo esc_attr( $this->admin_slug ); ?>">
-		<h2><?php echo esc_html( $this->admin_title ); ?></h2>
+		?>
+		<div class="wrap <?php echo esc_attr( $this->admin_slug ); ?>">
+			<h2><?php echo esc_html( $this->admin_title ); ?></h2>
 
-		<form method="get">
-			<?php wp_nonce_field( __FILE__, 'taxonomy_switcher_nonce' ); ?>
-			<input type="hidden" name="taxonomy_switcher" value="1" />
-			<input type="hidden" name="page" value="<?php echo esc_attr( $this->admin_slug ); ?>" />
+			<form method="get">
+				<?php wp_nonce_field( __FILE__, 'taxonomy_switcher_nonce' ); ?>
+				<input type="hidden" name="taxonomy_switcher" value="1" />
+				<input type="hidden" name="page" value="<?php echo esc_attr( $this->admin_slug ); ?>" />
 
-			<table class="form-table">
-				<tbody>
-				<tr valign="top">
-					<th scope="row"><label for="from_tax"><?php esc_html_e( 'Taxonomy to switch from:', 'wds' ); ?></label></th>
-					<td>
-						<select name="from_tax" id="from_tax">
-							<?php $this->fill_options( 'from_tax' ); ?>
-						</select>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row"><label for="to_tax"><?php esc_html_e( 'Taxonomy to switch to:', 'wds' ); ?></label></th>
-					<td>
-						<select name="to_tax" id="to_tax">
-							<?php $this->fill_options( 'to_tax' ); ?>
-						</select>
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row">
-						<label for="taxonomy-switcher-terms"><?php esc_html_e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
-					</th>
-					<td>
-						<input placeholder="1,2,13" class="regular-text" type="text" id="taxonomy-switcher-terms" name="terms" value="<?php echo isset( $_GET[ 'terms' ] ) ? esc_attr( $_GET[ 'terms' ] ) : ''; ?>">
-					</td>
-				</tr>
-				<tr valign="top">
-					<th scope="row">
-						<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxonomy switch for child terms of a specific parent', 'wds' ); ?></label>
-					</th>
-					<td>
-						<input class="regular-text" type="text" id="taxonomy-switcher-parent" name="parent" value="<?php echo isset( $_GET['parent'] ) ? esc_attr( $_GET['parent'] ) : ''; ?>" placeholder="<?php esc_attr_e( 'Start typing to search for a term parent', 'wds' ); ?>">
+				<table class="form-table">
+					<tbody>
+					<tr valign="top">
+						<th scope="row"><label for="from_tax"><?php esc_html_e( 'Taxonomy to switch from:', 'wds' ); ?></label></th>
+						<td>
+							<select name="from_tax" id="from_tax">
+								<?php $this->fill_options( 'from_tax' ); ?>
+							</select>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row"><label for="to_tax"><?php esc_html_e( 'Taxonomy to switch to:', 'wds' ); ?></label></th>
+						<td>
+							<select name="to_tax" id="to_tax">
+								<?php $this->fill_options( 'to_tax' ); ?>
+							</select>
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row">
+							<label for="taxonomy-switcher-terms"><?php esc_html_e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
+						</th>
+						<td>
+							<input placeholder="1,2,13" class="regular-text" type="text" id="taxonomy-switcher-terms" name="terms" value="<?php echo isset( $_GET[ 'terms' ] ) ? esc_attr( $_GET[ 'terms' ] ) : ''; ?>">
+						</td>
+					</tr>
+					<tr valign="top">
+						<th scope="row">
+							<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxonomy switch for child terms of a specific parent', 'wds' ); ?></label>
+						</th>
+						<td>
+							<input class="regular-text" type="text" id="taxonomy-switcher-parent" name="parent" value="<?php echo isset( $_GET['parent'] ) ? esc_attr( $_GET['parent'] ) : ''; ?>" placeholder="<?php esc_attr_e( 'Start typing to search for a term parent', 'wds' ); ?>">
 
-						<p class="taxonomy-switcher-spinner spinner"></p>
+							<p class="taxonomy-switcher-spinner spinner"></p>
 
-						<p class="taxonomy-switcher-ajax-results-help" style="display:none;"><?php esc_html_e( 'Select a term:', 'wds' ); ?></p>
+							<p class="taxonomy-switcher-ajax-results-help" style="display:none;"><?php esc_html_e( 'Select a term:', 'wds' ); ?></p>
 
-						<div class="taxonomy-switcher-ajax-results-posts"></div>
-					</td>
-				</tr>
-				</tbody>
-			</table>
+							<div class="taxonomy-switcher-ajax-results-posts"></div>
+						</td>
+					</tr>
+					</tbody>
+				</table>
 
-			<?php submit_button( __( 'Switch Taxonomies', 'wds' ) ); ?>
-		</form>
-<?php
+				<?php submit_button( __( 'Switch Taxonomies', 'wds' ) ); ?>
+			</form>
+		</div>
+	<?php
 	}
 
 	/**
