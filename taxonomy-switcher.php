@@ -14,7 +14,7 @@ Author URI: http://webdevstudios.com
 class Taxonomy_Switcher_Init {
 
 	/**
-	 * Setup the object
+	 * Setup the object.
 	 *
 	 * @since 1.0.0
 	 */
@@ -40,7 +40,7 @@ class Taxonomy_Switcher_Init {
 	}
 
 	/**
-	 * Include Taxonomy_Switcher if being run
+	 * Include Taxonomy_Switcher if being run.
 	 *
 	 * @since 1.0.0
 	 */
