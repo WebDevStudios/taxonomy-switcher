@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Taxonomy_Switcher_UI
+ * Class Taxonomy_Switcher_UI.
  */
 class Taxonomy_Switcher_UI {
 
@@ -65,7 +65,7 @@ class Taxonomy_Switcher_UI {
 	/**
 	 * Peform our UI admin page hooks.
 	 *
-	 * @since  1.0.0
+	 * @since 1.0.0
 	 */
 	public function hooks() {
 
