@@ -25,7 +25,7 @@
 		// hide our spinner
 		$spinner.hide();
 		// populate post ID to field
-		$ajaxinput.val( $self.data('termid') )/*.focus()*/;
+		$ajaxinput.val( $self.data('termid') );/*.focus()*/
 		// clear our results
 		$ajaxresults.html('');
 		$ajaxhelp.hide();
