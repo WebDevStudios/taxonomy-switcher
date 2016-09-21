@@ -1,5 +1,5 @@
 === Taxonomy Switcher ===
-Contributors: webdevstudios, sc0ttkclark, jtsternberg
+Contributors: webdevstudios, pluginize, sc0ttkclark, jtsternberg
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3084056
 Tags: taxonomy, taxonomies, term, terms, category, categories, convert, converter, tag, tags, custom taxonomy, custom taxonomies, switch taxonomies
 Requires at least: 3.5
