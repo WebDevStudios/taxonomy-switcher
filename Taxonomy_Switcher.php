@@ -247,7 +247,8 @@ class Taxonomy_Switcher {
 				WHERE `parent` = %d AND `term_id` IN ( {$term_ids} )
 			", $this->parent ) );
 		}
-
+		// Clean term caches
+		clean_term_cache( $term_ids, $this->to, true );
 		return true;
 	}
 }
