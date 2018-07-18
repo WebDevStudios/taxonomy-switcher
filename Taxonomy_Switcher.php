@@ -248,7 +248,8 @@ class Taxonomy_Switcher {
 			", $this->parent ) );
 		}
 		// Clean term caches
-		clean_term_cache( $term_ids, $this->to, true );
+		clean_term_cache( $term_ids, $this->from );
+		clean_term_cache( $term_ids, $this->to );
 		return true;
 	}
 }
