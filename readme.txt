@@ -3,8 +3,8 @@ Contributors: webdevstudios, pluginize, sc0ttkclark, jtsternberg
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3084056
 Tags: taxonomy, taxonomies, term, terms, category, categories, convert, converter, tag, tags, custom taxonomy, custom taxonomies, switch taxonomies
 Requires at least: 3.5
-Tested up to: 4.7
-Stable tag: 1.0.2
+Tested up to: 5.4
+Stable tag: 1.0.3
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 
@@ -43,6 +43,9 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 2. Live-searching for a parent term
 
 == Changelog ==
+
+= 1.0.3 =
+* Confirmed compatibility with WordPress 5.4.0
 
 = 1.0.2 =
 * Update for xss vulnerability, https://make.wordpress.org/plugins/2015/04/20/fixing-add_query_arg-and-remove_query_arg-usage

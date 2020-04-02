@@ -192,26 +192,20 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function ajax_term_results() {
 
-		// Verify our nonce, and required data.
 		if ( ! ( isset( $_REQUEST[ 'nonce' ], $_REQUEST[ 'search' ] ) && wp_verify_nonce( $_REQUEST[ 'nonce' ], __FILE__ ) ) ) {
 			$this->send_error( __LINE__, __( 'Security check failed', 'wds' ) );
 		}
 
-		// Set taxonomy.
 		$taxonomy = isset( $_REQUEST[ 'tax_name' ] ) ? $_REQUEST[ 'tax_name' ] : 'category';
 
-		// Sanitize our search string.
 		$search_string = sanitize_text_field( $_REQUEST[ 'search' ] );
 
-		// No search string, bail.
 		if ( empty( $search_string ) ) {
 			$this->send_error( __LINE__, __( 'Please Try Again', 'wds' ) );
 		}
 
-		// Do term search.
 		$terms = $this->get_terms( $search_string, $taxonomy );
 
-		// No terms, bail.
 		if ( ! $terms ) {
 			$this->send_error( __LINE__ );
 		}
@@ -227,15 +221,12 @@ class Taxonomy_Switcher_UI {
 			$items = $this->get_list_items( $terms );
 		}
 
-		// No items, bail.
 		if ( ! $items ) {
 			$this->send_error( __LINE__, __( 'No terms found with children.', 'wds' ) );
 		}
 
-		// Build our ordered list.
 		$return = sprintf( '<ol>%s</ol>', $items );
 
-		// Send back our encoded data.
 		wp_send_json_success( array( 'html' => $return ) );
 
 	}
@@ -276,7 +267,7 @@ class Taxonomy_Switcher_UI {
 			// Add our term clause filter for this iteration (if < than 3.7).
 			add_filter( 'terms_clauses', array( $this, 'wilcard_term_name' ) );
 		}
-		// Do term search.
+
 		$terms = get_terms( $taxonomy, array(
 			'number'       => absint( $number ),
 			'name__like'   => $search_string,
@@ -300,17 +291,14 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function get_list_items( $terms ) {
 
-		// Loop found terms and concatenate list items.
 		$items = '';
 
 		foreach ( $terms as $term ) {
-			// Check if this term has child terms.
 			$children = get_terms( $term->taxonomy, array(
 				'parent' => $term->term_id,
 				'hide_empty' => false,
 			) );
 
-			// If no child terms to convert, bail.
 			if ( ! $children ) {
 				continue;
 			}
