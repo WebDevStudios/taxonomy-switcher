@@ -2,11 +2,12 @@
 Contributors: webdevstudios, pluginize, sc0ttkclark, jtsternberg
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3084056
 Tags: taxonomy, taxonomies, term, terms, category, categories, convert, converter, tag, tags, custom taxonomy, custom taxonomies, switch taxonomies
-Requires at least: 3.5
-Tested up to: 5.4
-Stable tag: 1.0.3
+Requires at least: 5.2
+Tested up to: 5.8.1
+Stable tag: 1.0.4
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
+Requires PHP: 5.6
 
 Switch the taxonomy for all terms or only child terms of a specified parent term.
 
@@ -44,6 +45,9 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 
 == Changelog ==
 
+= 1.0.4 =
+* Updated: changed required capability to manage_categories
+
 = 1.0.3 =
 * Confirmed compatibility with WordPress 5.4.0
 
@@ -58,8 +62,5 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 
 == Upgrade Notice ==
 
-= 1.0.1 =
-* Add ability to switch comma-separated list of term IDs.
-
-= 1.0.0 =
-* Release
+= 1.0.4 =
+* Updated: changed required capability to manage_categories

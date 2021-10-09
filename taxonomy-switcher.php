@@ -3,7 +3,7 @@
 Plugin Name: Taxonomy Switcher
 Plugin URI: https://github.com/WebDevStudios/taxonomy-switcher
 Description: Switches the Taxonomy of terms to a different Taxonomy
-Version: 1.0.3
+Version: 1.0.4
 Author: WebDevStudios
 Author URI: http://webdevstudios.com
 */
@@ -29,11 +29,11 @@ class Taxonomy_Switcher_Init {
 			$this->ui->hooks();
 		}
 
-		add_action( 'admin_init', array( $this, 'taxonomy_switcher_init' ) );
+		add_action( 'admin_init', [ $this, 'taxonomy_switcher_init' ] );
 
 		$this->notices = get_option( 'taxonomy-switcher-notices' );
 		if ( $this->notices ) {
-			add_action( 'all_admin_notices', array( $this, 'do_admin_notice' ) );
+			add_action( 'all_admin_notices', [ $this, 'do_admin_notice' ] );
 		}
 
 	}
@@ -48,7 +48,7 @@ class Taxonomy_Switcher_Init {
 		if (
 			! isset( $_GET[ 'taxonomy_switcher' ] )
 			|| 1 != $_GET[ 'taxonomy_switcher' ]
-			|| ! current_user_can( 'install_plugins' )
+			|| ! current_user_can( 'manage_categories' )
 			|| ! isset( $_GET[ 'from_tax' ] )
 			|| empty( $_GET[ 'from_tax' ] )
 			|| ! isset( $_GET[ 'to_tax' ] )

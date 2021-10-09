@@ -30,28 +30,28 @@ class Taxonomy_Switcher {
 	 *
 	 * @var array
 	 */
-	public $terms = array();
+	public $terms = [];
 
 	/**
 	 * Array of term IDs to convert.
 	 *
 	 * @var array
 	 */
-	public $term_ids = array();
+	public $term_ids = [];
 
 	/**
 	 * Array of notices from conversion.
 	 *
 	 * @var array
 	 */
-	public $notices = array();
+	public $notices = [];
 
 	/**
 	 * Array of error/success messages.
 	 *
 	 * @var array
 	 */
-	public $messages = array();
+	public $messages = [];
 
 	/**
 	 * Setup the object.
@@ -61,14 +61,14 @@ class Taxonomy_Switcher {
 	 * @param array $args Arguments containing from taxonomy, to taxonomy,
 	 *                    and additional optional params.
 	 */
-	public function __construct( $args = array() ) {
+	public function __construct( $args = [] ) {
 
-		$args = wp_parse_args( $args, array(
+		$args = wp_parse_args( $args, [
 			'from_tax' => '',
 			'to_tax'   => '',
 			'parent'   => '',
 			'terms'    => '',
-		) );
+		] );
 
 		if ( ! $args['from_tax'] || ! $args['to_tax'] ) {
 			return;
@@ -155,13 +155,13 @@ class Taxonomy_Switcher {
 
 		$count          = $this->count();
 		$count_name     = sprintf( _n( '1 term', '%d terms', $count, 'wds' ), $count );
-		$this->messages = array(
+		$this->messages = [
 			'no_terms'        => __( 'No terms to be switched. Check if the term exists in your "from" taxonomy.', 'wds' ),
 			'switching'       => sprintf( __( 'Switching %s with the taxonomy \'%s\' to the taxonomy \'%s\'', 'wds' ), $count_name, $this->from, $this->to ),
 			'limit_by_parent' => sprintf( __( 'Limiting the switch by the parent term_id of %d', 'wds' ), $this->parent ),
 			'limit_by_terms'  => sprintf( __( 'Limiting the switch to these terms: %s', 'wds' ), implode( ', ', $this->terms ) ),
 			'switched'        => sprintf( __( 'Taxonomies switched for %s!', 'wds' ), $count_name ),
-		);
+		];
 		return $this->messages[ $key ];
 	}
 
@@ -174,18 +174,18 @@ class Taxonomy_Switcher {
 	 */
 	public function get_term_ids() {
 
-		$args = array(
+		$args = [
 			'hide_empty' => false,
 			'fields'     => 'ids',
 			'child_of'   => $this->parent,
 			'include'    => $this->terms,
-		);
+		];
 
-		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, array( 'parent' => $this->parent, 'terms' => $this->terms ) );
+		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, [ 'parent' => $this->parent, 'terms' => $this->terms ] );
 
 		$terms = get_terms( $this->from, $args );
 
-		$this->term_ids = array();
+		$this->term_ids = [];
 
 		if ( ! is_wp_error( $terms ) && ! empty( $terms ) ) {
 			$this->term_ids = $terms;
