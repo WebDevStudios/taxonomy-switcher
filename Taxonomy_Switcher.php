@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class Taxonomy_Switcher.
  */
@@ -129,6 +130,7 @@ class Taxonomy_Switcher {
 	 * @since 1.0.0
 	 *
 	 * @param string $notice Notice to store and/or display.
+	 *
 	 * @return array
 	 */
 	public function notice( $notice ) {
@@ -137,6 +139,7 @@ class Taxonomy_Switcher {
 		if ( ! $this->is_ui ) {
 			echo $notice;
 		}
+
 		return $this->notices;
 	}
 
@@ -146,6 +149,7 @@ class Taxonomy_Switcher {
 	 * @since 1.0.0
 	 *
 	 * @param string $key Array key to retrieve.
+	 *
 	 * @return mixed
 	 */
 	public function notices( $key ) {
@@ -162,6 +166,7 @@ class Taxonomy_Switcher {
 			'limit_by_terms'  => sprintf( __( 'Limiting the switch to these terms: %s', 'wds' ), implode( ', ', $this->terms ) ),
 			'switched'        => sprintf( __( 'Taxonomies switched for %s!', 'wds' ), $count_name ),
 		];
+
 		return $this->messages[ $key ];
 	}
 
@@ -181,7 +186,10 @@ class Taxonomy_Switcher {
 			'include'    => $this->terms,
 		];
 
-		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, [ 'parent' => $this->parent, 'terms' => $this->terms ] );
+		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, array(
+			'parent' => $this->parent,
+			'terms'  => $this->terms
+		) );
 
 		$terms = get_terms( $this->from, $args );
 
@@ -247,9 +255,26 @@ class Taxonomy_Switcher {
 				WHERE `parent` = %d AND `term_id` IN ( {$term_ids} )
 			", $this->parent ) );
 		}
+
+		$post_ids = $wpdb->get_col( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_menu_item_object_id' AND meta_value IN ( {$term_ids} );" );
+		update_postmeta_cache( $post_ids );
+		foreach ( $post_ids as $post_id ) {
+			$type   = get_post_meta( $post_id, '_menu_item_type', true );
+			$object = get_post_meta( $post_id, '_menu_item_object', true );
+			if ( 'taxonomy' !== $type ) {
+				continue;
+			}
+			if ( $this->from !== $object ) {
+				continue;
+			}
+			update_post_meta( $post_id, '_menu_item_object', $this->to );
+			clean_post_cache( $post_id );
+		}
+
 		// Clean term caches
 		clean_term_cache( $term_ids, $this->from );
 		clean_term_cache( $term_ids, $this->to );
+
 		return true;
 	}
 }
