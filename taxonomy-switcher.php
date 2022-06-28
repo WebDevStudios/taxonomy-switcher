@@ -3,7 +3,7 @@
 Plugin Name: Taxonomy Switcher
 Plugin URI: https://github.com/WebDevStudios/taxonomy-switcher
 Description: Switches the Taxonomy of terms to a different Taxonomy
-Version: 1.0.2
+Version: 1.0.4
 Author: WebDevStudios
 Author URI: http://webdevstudios.com
 */
@@ -20,22 +20,20 @@ class Taxonomy_Switcher_Init {
 	 */
 	public function __construct() {
 
-		// WP-CLI integration.
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			require_once( dirname( __FILE__ ) . '/Taxonomy_Switcher.php' );
 			require_once( dirname( __FILE__ ) . '/wp-cli.php' );
 		} else {
-			// No WP-CLI? Ok, let's add our UI.
 			require_once( dirname( __FILE__ ) . '/Taxonomy_Switcher_UI.php' );
 			$this->ui = new Taxonomy_Switcher_UI();
 			$this->ui->hooks();
 		}
 
-		add_action( 'admin_init', array( $this, 'taxonomy_switcher_init' ) );
+		add_action( 'admin_init', [ $this, 'taxonomy_switcher_init' ] );
 
 		$this->notices = get_option( 'taxonomy-switcher-notices' );
 		if ( $this->notices ) {
-			add_action( 'all_admin_notices', array( $this, 'do_admin_notice' ) );
+			add_action( 'all_admin_notices', [ $this, 'do_admin_notice' ] );
 		}
 
 	}
@@ -50,7 +48,7 @@ class Taxonomy_Switcher_Init {
 		if (
 			! isset( $_GET[ 'taxonomy_switcher' ] )
 			|| 1 != $_GET[ 'taxonomy_switcher' ]
-			|| ! current_user_can( 'install_plugins' )
+			|| ! current_user_can( 'manage_categories' )
 			|| ! isset( $_GET[ 'from_tax' ] )
 			|| empty( $_GET[ 'from_tax' ] )
 			|| ! isset( $_GET[ 'to_tax' ] )
@@ -69,9 +67,7 @@ class Taxonomy_Switcher_Init {
 			return;
 		}
 
-		// Save notices.
 		add_option( 'taxonomy-switcher-notices', $success_notices, null, 'no' );
-		// Redirect and strip query string.
 		wp_redirect( esc_url_raw( add_query_arg( 'page', $this->ui->admin_slug, admin_url( '/tools.php' ) ) ) );
 
 	}

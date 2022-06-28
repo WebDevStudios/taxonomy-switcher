@@ -74,11 +74,11 @@ class Taxonomy_Switcher_Command extends WP_CLI_Command {
 	 * @return array
 	 */
 	protected function map_arg_names( $args ) {
-		$tomap = array(
+		$tomap = [
 			'to' => 'to_tax',
 			'from' => 'from_tax',
-		);
-		$newargs = array();
+		];
+		$newargs = [];
 		foreach ( $args as $key => $value ) {
 			if ( array_key_exists( $key, $tomap ) ) {
 		 		$newargs[ $tomap[ $key ] ] = $value;

@@ -46,7 +46,7 @@ class Taxonomy_Switcher_UI {
 	 *
 	 * @var array
 	 */
-	public $registered_taxonomies = array();
+	public $registered_taxonomies = [];
 
 	/**
 	 * Setup some vars.
@@ -69,8 +69,8 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function hooks() {
 
-		add_action( 'admin_menu', array( $this, 'add_page' ) );
-		add_action( 'wp_ajax_taxonomy_switcher_search_term_handler', array( $this, 'ajax_term_results' ) );
+		add_action( 'admin_menu', [ $this, 'add_page' ] );
+		add_action( 'wp_ajax_taxonomy_switcher_search_term_handler', [ $this, 'ajax_term_results' ] );
 
 	}
 
@@ -81,15 +81,15 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function add_page() {
 
-		$this->admin_title = __( 'Taxonomy Switcher', 'wds' );
+		$this->admin_title = esc_html__( 'Taxonomy Switcher', 'wds' );
 		$this->admin_slug  = 'taxonomy-switcher';
 
-		$this->options_page = add_management_page( $this->admin_title, $this->admin_title, 'manage_options', $this->admin_slug, array(
+		$this->options_page = add_management_page( $this->admin_title, $this->admin_title, 'manage_categories', $this->admin_slug, [
 			$this,
 			'do_page',
-		) );
+		] );
 
-		add_action( 'admin_head-' . $this->options_page, array( $this, 'js' ) );
+		add_action( 'admin_head-' . $this->options_page, [ $this, 'js' ] );
 
 	}
 
@@ -99,7 +99,7 @@ class Taxonomy_Switcher_UI {
 	 * @since 1.0.0
 	 */
 	public function js() {
-		wp_enqueue_script( $this->admin_slug, $this->dir_url . 'js/' . $this->admin_slug . '.js', array( 'jquery' ), self::VERSION, true );
+		wp_enqueue_script( $this->admin_slug, $this->dir_url . 'js/' . $this->admin_slug . '.js', [ 'jquery' ], self::VERSION, true );
 	}
 
 	/**
@@ -109,7 +109,7 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function do_page() {
 
-		$this->registered_taxonomies = get_taxonomies( array(), 'objects' );
+		$this->registered_taxonomies = get_taxonomies( [], 'objects' );
 		?>
 		<div class="wrap <?php echo esc_attr( $this->admin_slug ); ?>">
 			<h2><?php echo esc_html( $this->admin_title ); ?></h2>
@@ -192,26 +192,20 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function ajax_term_results() {
 
-		// Verify our nonce, and required data.
 		if ( ! ( isset( $_REQUEST[ 'nonce' ], $_REQUEST[ 'search' ] ) && wp_verify_nonce( $_REQUEST[ 'nonce' ], __FILE__ ) ) ) {
 			$this->send_error( __LINE__, __( 'Security check failed', 'wds' ) );
 		}
 
-		// Set taxonomy.
 		$taxonomy = isset( $_REQUEST[ 'tax_name' ] ) ? $_REQUEST[ 'tax_name' ] : 'category';
 
-		// Sanitize our search string.
 		$search_string = sanitize_text_field( $_REQUEST[ 'search' ] );
 
-		// No search string, bail.
 		if ( empty( $search_string ) ) {
 			$this->send_error( __LINE__, __( 'Please Try Again', 'wds' ) );
 		}
 
-		// Do term search.
 		$terms = $this->get_terms( $search_string, $taxonomy );
 
-		// No terms, bail.
 		if ( ! $terms ) {
 			$this->send_error( __LINE__ );
 		}
@@ -227,16 +221,13 @@ class Taxonomy_Switcher_UI {
 			$items = $this->get_list_items( $terms );
 		}
 
-		// No items, bail.
 		if ( ! $items ) {
 			$this->send_error( __LINE__, __( 'No terms found with children.', 'wds' ) );
 		}
 
-		// Build our ordered list.
 		$return = sprintf( '<ol>%s</ol>', $items );
 
-		// Send back our encoded data.
-		wp_send_json_success( array( 'html' => $return ) );
+		wp_send_json_success( [ 'html' => $return ] );
 
 	}
 
@@ -252,11 +243,11 @@ class Taxonomy_Switcher_UI {
 
 		$msg = $msg ? $msg : __( 'No Results Found', 'wds' );
 
-		wp_send_json_error( array(
+		wp_send_json_error( [
 			'html' => '<ul><li>' . $msg . '</li></ul>',
 			'line' => $line,
 			'$_REQUEST' => $_REQUEST,
-		) );
+		] );
 
 	}
 
@@ -274,17 +265,17 @@ class Taxonomy_Switcher_UI {
 
 		if ( $this->not_37 ) {
 			// Add our term clause filter for this iteration (if < than 3.7).
-			add_filter( 'terms_clauses', array( $this, 'wilcard_term_name' ) );
+			add_filter( 'terms_clauses', [ $this, 'wilcard_term_name' ] );
 		}
-		// Do term search.
-		$terms = get_terms( $taxonomy, array(
+
+		$terms = get_terms( $taxonomy, [
 			'number'       => absint( $number ),
 			'name__like'   => $search_string,
 			'cache_domain' => 'taxonomy_switch_search2',
 			'get'          => 'all',
-		) );
+		] );
 
-		remove_filter( 'terms_clauses', array( $this, 'wilcard_term_name' ) );
+		remove_filter( 'terms_clauses', [ $this, 'wilcard_term_name' ] );
 
 		return empty( $terms ) || is_wp_error( $terms ) ? false : $terms;
 
@@ -300,17 +291,14 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function get_list_items( $terms ) {
 
-		// Loop found terms and concatenate list items.
 		$items = '';
 
 		foreach ( $terms as $term ) {
-			// Check if this term has child terms.
-			$children = get_terms( $term->taxonomy, array(
+			$children = get_terms( $term->taxonomy, [
 				'parent' => $term->term_id,
 				'hide_empty' => false,
-			) );
+			] );
 
-			// If no child terms to convert, bail.
 			if ( ! $children ) {
 				continue;
 			}

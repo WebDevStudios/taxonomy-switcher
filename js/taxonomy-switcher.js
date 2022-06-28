@@ -22,11 +22,9 @@
 	txsw.resultsClick = function( event ) {
 		event.preventDefault();
 		var $self = $(this);
-		// hide our spinner
 		$spinner.hide();
 		// populate post ID to field
 		$ajaxinput.val( $self.data('termid') );/*.focus()*/
-		// clear our results
 		$ajaxresults.html('');
 		$ajaxhelp.hide();
 	}
@@ -36,9 +34,7 @@
 		// hide our spinner
 		$spinner.hide();
 
-		// if we have a response id
 		if ( typeof response.data !== 'undefined' ) {
-			// and populate our results from ajax response
 			$ajaxresults.html(response.data.html);
 			$ajaxhelp.show();
 		}
@@ -47,9 +43,7 @@
 	txsw.maybeAjax = function( evt ) {
 
 		$self = $(this);
-		// get typed value
 		var term_search = $self.val();
-		// only proceed if the user's typed more than 2 characters
 		if ( term_search.length < 2 )
 			return this;
 
@@ -58,9 +52,7 @@
 			// clear out our results
 			$ajaxresults.html('');
 			$ajaxhelp.hide();
-			// show our spinner
 			$spinner.css({'float':'none'}).show();
-			// and run our ajax function
 			setTimeout(function(){
 				// if they haven't typed in 500 ms
 				if ( $ajaxinput.val() == term_search ) {
@@ -82,9 +74,7 @@
 	}
 
 	$context
-		// when typing a term name..
 		.on( 'keyup', '#taxonomy-switcher-parent', txsw.maybeAjax ).blur( txsw.hideSpinner )
-		// When clicking on a results post, populate our input
 		.on( 'click', '.taxonomy-switcher-ajax-results-posts a', txsw.resultsClick );
 
 })(window, document, jQuery);
