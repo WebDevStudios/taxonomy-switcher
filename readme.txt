@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_i
 Tags: taxonomy, taxonomies, term, terms, category, categories, convert, converter, tag, tags, custom taxonomy, custom taxonomies, switch taxonomies
 Requires at least: 5.2
 Tested up to: 6.2.1
-Stable tag: 1.0.4
+Stable tag: 1.0.5
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 Requires PHP: 5.6
@@ -45,6 +45,9 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 
 == Changelog ==
 
+= 1.0.5 =
+* Updated: Confirmed WP 6.2.1 compatibility.
+
 = 1.0.4 =
 * Updated: changed required capability to manage_categories
 
@@ -62,5 +65,5 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 
 == Upgrade Notice ==
 
-= 1.0.4 =
-* Updated: changed required capability to manage_categories
+= 1.0.5 =
+* Updated: Confirmed WP 6.2.1 compatibility.
