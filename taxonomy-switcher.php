@@ -21,7 +21,7 @@ class Taxonomy_Switcher_Init {
 	/**
 	 * @var mixed
 	 */
-	private array $notices;
+	private $notices;
 
 	/**
 	 * Setup the object.
