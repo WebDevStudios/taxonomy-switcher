@@ -14,6 +14,16 @@ Author URI: http://webdevstudios.com
 class Taxonomy_Switcher_Init {
 
 	/**
+	 * @var Taxonomy_Switcher_UI
+	 */
+	private Taxonomy_Switcher_UI $ui;
+
+	/**
+	 * @var mixed
+	 */
+	private array $notices;
+
+	/**
 	 * Setup the object.
 	 *
 	 * @since 1.0.0
