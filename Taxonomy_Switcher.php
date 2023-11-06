@@ -55,6 +55,13 @@ class Taxonomy_Switcher {
 	public $messages = [];
 
 	/**
+	 * Whether or not is our option page.
+	 *
+	 * @var bool
+	 */
+	public $is_ui;
+
+	/**
 	 * Setup the object.
 	 *
 	 * @since 1.0.0
