@@ -47,6 +47,8 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 
 = 1.0.6 =
 * Updated: Confirmed WP 6.4 compatibility.
+* Updated: Moved capability back to manage_options to sync with options page.
+* Updated: Clear caches after conversion.
 * Fixed: PHP8 deprecation notices.
 
 = 1.0.5 =
