@@ -193,10 +193,10 @@ class Taxonomy_Switcher {
 			'include'    => $this->terms,
 		];
 
-		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, array(
+		$args = apply_filters( 'taxonomy_switcher_get_terms_args', $args, $this->from, $this->to, [
 			'parent' => $this->parent,
 			'terms'  => $this->terms
-		) );
+		] );
 
 		$terms = get_terms( $this->from, $args );
 
