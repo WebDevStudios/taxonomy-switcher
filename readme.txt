@@ -1,7 +1,7 @@
 === Taxonomy Switcher ===
 Contributors: webdevstudios, pluginize
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3084056
-Tags: taxonomy, taxonomies, term, terms, category, categories, convert, converter, tag, tags, custom taxonomy, custom taxonomies, switch taxonomies
+Tags: taxonomy, term, category, tag, switch
 Requires at least: 5.2
 Tested up to: 6.5
 Stable tag: 1.0.7
