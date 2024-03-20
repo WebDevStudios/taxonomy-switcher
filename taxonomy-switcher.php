@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Taxonomy Switcher
-Plugin URI: https://github.com/WebDevStudios/taxonomy-switcher
-Description: Switches the Taxonomy of terms to a different Taxonomy
-Version: 1.0.6
-Author: WebDevStudios
-Author URI: http://webdevstudios.com
-*/
+ * Plugin Name: Taxonomy Switcher
+ * Plugin URI: https://github.com/WebDevStudios/taxonomy-switcher
+ * Description: Switches the Taxonomy of terms to a different Taxonomy
+ * Version: 1.0.7
+ * Author: WebDevStudios
+ * Author URI: http://webdevstudios.com
+ */
 
 /**
  * Class Taxonomy_Switcher_Init
