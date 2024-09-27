@@ -111,7 +111,7 @@ class Taxonomy_Switcher_UI {
 
 		$this->registered_taxonomies = get_taxonomies( [], 'objects' );
 		?>
-		<div class="wrap <?php echo esc_attr( $this->admin_slug ); ?>">
+		<div id="wds-taxonomy-switcher" class="wrap <?php echo esc_attr( $this->admin_slug ); ?>">
 			<h2><?php echo esc_html( $this->admin_title ); ?></h2>
 
 			<form method="get">
