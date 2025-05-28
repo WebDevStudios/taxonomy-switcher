@@ -121,7 +121,7 @@ class Taxonomy_Switcher_UI {
 
 				<table class="form-table">
 					<tbody>
-					<tr valign="top">
+					<tr>
 						<th scope="row"><label for="from_tax"><?php esc_html_e( 'Taxonomy to switch from:', 'wds' ); ?></label></th>
 						<td>
 							<select name="from_tax" id="from_tax">
@@ -129,7 +129,7 @@ class Taxonomy_Switcher_UI {
 							</select>
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr>
 						<th scope="row"><label for="to_tax"><?php esc_html_e( 'Taxonomy to switch to:', 'wds' ); ?></label></th>
 						<td>
 							<select name="to_tax" id="to_tax">
@@ -137,7 +137,7 @@ class Taxonomy_Switcher_UI {
 							</select>
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<label for="taxonomy-switcher-terms"><?php esc_html_e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
 						</th>
@@ -145,7 +145,7 @@ class Taxonomy_Switcher_UI {
 							<input placeholder="1,2,13" class="regular-text" type="text" id="taxonomy-switcher-terms" name="terms" value="<?php echo isset( $_GET[ 'terms' ] ) ? esc_attr( $_GET[ 'terms' ] ) : ''; ?>">
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxonomy switch for child terms of a specific parent', 'wds' ); ?></label>
 						</th>
