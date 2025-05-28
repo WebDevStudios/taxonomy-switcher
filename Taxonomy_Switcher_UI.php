@@ -177,7 +177,7 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function fill_options( string $name ) {
 
-		$current = isset( $_GET[ $name ] ) ? $_GET[ $name ] : false;
+		$current = $_GET[ $name ] ?? false;
 
 		foreach ( $this->registered_taxonomies as $slug => $tax_object ) {
 			echo '<option value="' . esc_attr( $slug ) . '" ' . selected( $slug, $current, false ) . '>' . $tax_object->labels->name . '</option>';
@@ -196,7 +196,7 @@ class Taxonomy_Switcher_UI {
 			$this->send_error( __LINE__, __( 'Security check failed', 'wds' ) );
 		}
 
-		$taxonomy = isset( $_REQUEST[ 'tax_name' ] ) ? $_REQUEST[ 'tax_name' ] : 'category';
+		$taxonomy = $_REQUEST['tax_name'] ?? 'category';
 
 		$search_string = sanitize_text_field( $_REQUEST[ 'search' ] );
 
@@ -241,7 +241,7 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function send_error( string $line, string $msg = '' ) {
 
-		$msg = $msg ? $msg : __( 'No Results Found', 'wds' );
+		$msg = $msg ?: esc_html__( 'No Results Found', 'wds' );
 
 		wp_send_json_error( [
 			'html' => '<ul><li>' . $msg . '</li></ul>',
