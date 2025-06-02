@@ -4,49 +4,49 @@
  */
 class Taxonomy_Switcher_UI {
 
-	const VERSION = '1.0.0';
+	const VERSION = '1.0.8';
 
 	/**
 	 * Whether or not we are on WordPress 3.7.
 	 *
 	 * @var bool
 	 */
-	public $not_37 = false;
+	public bool $not_37 = false;
 
 	/**
 	 * Directory URL.
 	 *
 	 * @var string
 	 */
-	public $dir_url = '';
+	public string $dir_url = '';
 
 	/**
 	 * Admin title.
 	 *
 	 * @var string
 	 */
-	public $admin_title = '';
+	public string $admin_title = '';
 
 	/**
 	 * Admin slug.
 	 *
 	 * @var string
 	 */
-	public $admin_slug = '';
+	public string $admin_slug = '';
 
 	/**
 	 * Options page.
 	 *
 	 * @var string
 	 */
-	public $options_page = '';
+	public string $options_page = '';
 
 	/**
 	 * Array of registered taxonomies.
 	 *
 	 * @var array
 	 */
-	public $registered_taxonomies = [];
+	public array $registered_taxonomies = [];
 
 	/**
 	 * Setup some vars.
@@ -121,7 +121,7 @@ class Taxonomy_Switcher_UI {
 
 				<table class="form-table">
 					<tbody>
-					<tr valign="top">
+					<tr>
 						<th scope="row"><label for="from_tax"><?php esc_html_e( 'Taxonomy to switch from:', 'wds' ); ?></label></th>
 						<td>
 							<select name="from_tax" id="from_tax">
@@ -129,7 +129,7 @@ class Taxonomy_Switcher_UI {
 							</select>
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr>
 						<th scope="row"><label for="to_tax"><?php esc_html_e( 'Taxonomy to switch to:', 'wds' ); ?></label></th>
 						<td>
 							<select name="to_tax" id="to_tax">
@@ -137,7 +137,7 @@ class Taxonomy_Switcher_UI {
 							</select>
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<label for="taxonomy-switcher-terms"><?php esc_html_e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
 						</th>
@@ -145,7 +145,7 @@ class Taxonomy_Switcher_UI {
 							<input placeholder="1,2,13" class="regular-text" type="text" id="taxonomy-switcher-terms" name="terms" value="<?php echo isset( $_GET[ 'terms' ] ) ? esc_attr( $_GET[ 'terms' ] ) : ''; ?>">
 						</td>
 					</tr>
-					<tr valign="top">
+					<tr>
 						<th scope="row">
 							<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxonomy switch for child terms of a specific parent', 'wds' ); ?></label>
 						</th>
@@ -175,9 +175,9 @@ class Taxonomy_Switcher_UI {
 	 *
 	 * @param string $name Name of select.
 	 */
-	public function fill_options( $name ) {
+	public function fill_options( string $name ) {
 
-		$current = isset( $_GET[ $name ] ) ? $_GET[ $name ] : false;
+		$current = $_GET[ $name ] ?? false;
 
 		foreach ( $this->registered_taxonomies as $slug => $tax_object ) {
 			echo '<option value="' . esc_attr( $slug ) . '" ' . selected( $slug, $current, false ) . '>' . $tax_object->labels->name . '</option>';
@@ -196,7 +196,7 @@ class Taxonomy_Switcher_UI {
 			$this->send_error( __LINE__, __( 'Security check failed', 'wds' ) );
 		}
 
-		$taxonomy = isset( $_REQUEST[ 'tax_name' ] ) ? $_REQUEST[ 'tax_name' ] : 'category';
+		$taxonomy = $_REQUEST['tax_name'] ?? 'category';
 
 		$search_string = sanitize_text_field( $_REQUEST[ 'search' ] );
 
@@ -239,9 +239,9 @@ class Taxonomy_Switcher_UI {
 	 * @param string $line Line number of error.
 	 * @param string $msg  Message to send.
 	 */
-	public function send_error( $line, $msg = '' ) {
+	public function send_error( string $line, string $msg = '' ) {
 
-		$msg = $msg ? $msg : __( 'No Results Found', 'wds' );
+		$msg = $msg ?: esc_html__( 'No Results Found', 'wds' );
 
 		wp_send_json_error( [
 			'html' => '<ul><li>' . $msg . '</li></ul>',
@@ -261,7 +261,7 @@ class Taxonomy_Switcher_UI {
 	 * @param integer $number        Number of results to grab.
 	 * @return mixed Array of terms or false.
 	 */
-	public function get_terms( $search_string, $taxonomy, $number = 10 ) {
+	public function get_terms( string $search_string, string $taxonomy, int $number = 10 ) {
 
 		if ( $this->not_37 ) {
 			// Add our term clause filter for this iteration (if < than 3.7).
@@ -289,7 +289,7 @@ class Taxonomy_Switcher_UI {
 	 * @param array $terms Array of term objects.
 	 * @return string List item markup on success.
 	 */
-	public function get_list_items( $terms ) {
+	public function get_list_items( array $terms ) : string {
 
 		$items = '';
 
@@ -319,8 +319,8 @@ class Taxonomy_Switcher_UI {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $clauses Query clauses.
-	 * @return string Modified query clauses.
+	 * @param array $clauses Query clauses.
+	 * @return array Modified query clauses.
 	 */
 	public function wilcard_term_name( $clauses ) {
 

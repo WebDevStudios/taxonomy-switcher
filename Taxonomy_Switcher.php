@@ -10,56 +10,56 @@ class Taxonomy_Switcher {
 	 *
 	 * @var string
 	 */
-	public $from = '';
+	public string $from = '';
 
 	/**
 	 * Taxonomy to switch to.
 	 *
 	 * @var string
 	 */
-	public $to = '';
+	public string $to = '';
 
 	/**
 	 * Parent term_id to limit by.
 	 *
 	 * @var int
 	 */
-	public $parent = 0;
+	public int $parent = 0;
 
 	/**
 	 * Array of term IDs to convert.
 	 *
 	 * @var array
 	 */
-	public $terms = [];
+	public array $terms = [];
 
 	/**
 	 * Array of term IDs to convert.
 	 *
 	 * @var array
 	 */
-	public $term_ids = [];
+	public array $term_ids = [];
 
 	/**
 	 * Array of notices from conversion.
 	 *
 	 * @var array
 	 */
-	public $notices = [];
+	public array $notices = [];
 
 	/**
 	 * Array of error/success messages.
 	 *
 	 * @var array
 	 */
-	public $messages = [];
+	public array $messages = [];
 
 	/**
 	 * Whether or not is our option page.
 	 *
 	 * @var bool
 	 */
-	public $is_ui;
+	public bool $is_ui;
 
 	/**
 	 * Setup the object.
@@ -69,7 +69,7 @@ class Taxonomy_Switcher {
 	 * @param array $args Arguments containing from taxonomy, to taxonomy,
 	 *                    and additional optional params.
 	 */
-	public function __construct( $args = [] ) {
+	public function __construct( array $args = [] ) {
 
 		$args = wp_parse_args( $args, [
 			'from_tax' => '',
@@ -140,7 +140,7 @@ class Taxonomy_Switcher {
 	 *
 	 * @return array
 	 */
-	public function notice( $notice ) {
+	public function notice( string $notice ) {
 		// Add to our notices array.
 		$this->notices[] = $notice;
 		if ( ! $this->is_ui ) {
@@ -159,7 +159,7 @@ class Taxonomy_Switcher {
 	 *
 	 * @return mixed
 	 */
-	public function notices( $key ) {
+	public function notices( string $key ) {
 		if ( ! empty( $this->messages ) ) {
 			return $this->messages[ $key ];
 		}
@@ -184,7 +184,7 @@ class Taxonomy_Switcher {
 	 *
 	 * @return array An array of term ids.
 	 */
-	public function get_term_ids() {
+	public function get_term_ids() : array {
 
 		$args = [
 			'hide_empty' => false,
@@ -217,7 +217,7 @@ class Taxonomy_Switcher {
 	 *
 	 * @return int Total count of terms found.
 	 */
-	public function count() {
+	public function count() : int {
 
 		if ( empty( $this->term_ids ) ) {
 			$this->get_term_ids();
@@ -234,7 +234,7 @@ class Taxonomy_Switcher {
 	 *
 	 * @return bool Whether the conversion was successful.
 	 */
-	public function convert() {
+	public function convert() : bool {
 
 		if ( empty( $this->term_ids ) ) {
 			$this->get_term_ids();

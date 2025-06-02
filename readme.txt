@@ -3,11 +3,11 @@ Contributors: webdevstudios, pluginize
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3084056
 Tags: taxonomy, term, category, tag, switch
 Requires at least: 5.2
-Tested up to: 6.5
-Stable tag: 1.0.7
+Tested up to: 6.8.1
+Stable tag: 1.0.8
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
-Requires PHP: 5.6
+Requires PHP: 7.4
 
 Switch the taxonomy for all terms or only child terms of a specified parent term.
 
@@ -44,6 +44,10 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 2. Live-searching for a parent term
 
 == Changelog ==
+
+= 1.0.8 =
+* Updated: Confirmed WP 6.8 compatibility.
+* Updated: Misc little code cleanups that should not affect anyone.
 
 = 1.0.7 =
 * Updated: Confirmed WP 6.5 compatibility.
