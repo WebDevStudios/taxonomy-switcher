@@ -69,7 +69,7 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function add_page() {
 
-		$this->admin_title = esc_html__( 'Taxonomy Switcher', 'wds' );
+		$this->admin_title = esc_html__( 'Taxonomy Switcher', 'taxonomy-switcher' );
 		$this->admin_slug  = 'taxonomy-switcher';
 
 		$this->options_page = add_management_page( $this->admin_title, $this->admin_title, 'manage_options', $this->admin_slug, [
@@ -110,7 +110,7 @@ class Taxonomy_Switcher_UI {
 				<table class="form-table">
 					<tbody>
 					<tr>
-						<th scope="row"><label for="from_tax"><?php esc_html_e( 'Taxonomy to switch from:', 'wds' ); ?></label></th>
+						<th scope="row"><label for="from_tax"><?php esc_html_e( 'Taxonomy to switch from:', 'taxonomy-switcher' ); ?></label></th>
 						<td>
 							<select name="from_tax" id="from_tax">
 								<?php $this->fill_options( 'from_tax' ); ?>
@@ -118,7 +118,7 @@ class Taxonomy_Switcher_UI {
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><label for="to_tax"><?php esc_html_e( 'Taxonomy to switch to:', 'wds' ); ?></label></th>
+						<th scope="row"><label for="to_tax"><?php esc_html_e( 'Taxonomy to switch to:', 'taxonomy-switcher' ); ?></label></th>
 						<td>
 							<select name="to_tax" id="to_tax">
 								<?php $this->fill_options( 'to_tax' ); ?>
@@ -127,7 +127,7 @@ class Taxonomy_Switcher_UI {
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="taxonomy-switcher-terms"><?php esc_html_e( 'Comma separated list of term ids to switch', 'wds' ); ?></label>
+							<label for="taxonomy-switcher-terms"><?php esc_html_e( 'Comma separated list of term ids to switch', 'taxonomy-switcher' ); ?></label>
 						</th>
 						<td>
 							<input placeholder="1,2,13" class="regular-text" type="text" id="taxonomy-switcher-terms" name="terms" value="<?php echo isset( $_GET[ 'terms' ] ) ? esc_attr( $_GET[ 'terms' ] ) : ''; ?>">
@@ -135,14 +135,14 @@ class Taxonomy_Switcher_UI {
 					</tr>
 					<tr>
 						<th scope="row">
-							<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxonomy switch for child terms of a specific parent', 'wds' ); ?></label>
+							<label for="taxonomy-switcher-parent"><?php esc_html_e( 'Limit taxonomy switch for child terms of a specific parent', 'taxonomy-switcher' ); ?></label>
 						</th>
 						<td>
-							<input class="regular-text" type="text" id="taxonomy-switcher-parent" name="parent" value="<?php echo isset( $_GET['parent'] ) ? esc_attr( $_GET['parent'] ) : ''; ?>" placeholder="<?php esc_attr_e( 'Start typing to search for a term parent', 'wds' ); ?>">
+							<input class="regular-text" type="text" id="taxonomy-switcher-parent" name="parent" value="<?php echo isset( $_GET['parent'] ) ? esc_attr( $_GET['parent'] ) : ''; ?>" placeholder="<?php esc_attr_e( 'Start typing to search for a term parent', 'taxonomy-switcher' ); ?>">
 
 							<p class="taxonomy-switcher-spinner spinner"></p>
 
-							<p class="taxonomy-switcher-ajax-results-help" style="display:none;"><?php esc_html_e( 'Select a term:', 'wds' ); ?></p>
+							<p class="taxonomy-switcher-ajax-results-help" style="display:none;"><?php esc_html_e( 'Select a term:', 'taxonomy-switcher' ); ?></p>
 
 							<div class="taxonomy-switcher-ajax-results-posts"></div>
 						</td>
@@ -150,7 +150,7 @@ class Taxonomy_Switcher_UI {
 					</tbody>
 				</table>
 
-				<?php submit_button( __( 'Switch Taxonomies', 'wds' ) ); ?>
+				<?php submit_button( esc_attr__( 'Switch Taxonomies', 'taxonomy-switcher' ) ); ?>
 			</form>
 		</div>
 	<?php
@@ -181,7 +181,7 @@ class Taxonomy_Switcher_UI {
 	public function ajax_term_results() {
 
 		if ( ! ( isset( $_REQUEST[ 'nonce' ], $_REQUEST[ 'search' ] ) && wp_verify_nonce( $_REQUEST[ 'nonce' ], __FILE__ ) ) ) {
-			$this->send_error( __LINE__, __( 'Security check failed', 'wds' ) );
+			$this->send_error( __LINE__, esc_html__( 'Security check failed', 'taxonomy-switcher' ) );
 		}
 
 		$taxonomy = $_REQUEST['tax_name'] ?? 'category';
@@ -189,13 +189,13 @@ class Taxonomy_Switcher_UI {
 		$search_string = sanitize_text_field( $_REQUEST[ 'search' ] );
 
 		if ( empty( $search_string ) ) {
-			$this->send_error( __LINE__, __( 'Please Try Again', 'wds' ) );
+			$this->send_error( __LINE__, esc_html__( 'Please Try Again', 'taxonomy-switcher' ) );
 		}
 
 		$terms = $this->get_terms( $search_string, $taxonomy );
 
 		if ( ! $terms ) {
-			$this->send_error( __LINE__ );
+			$this->send_error( __LINE__, esc_html__( 'No terms found', 'taxonomy-switcher' ) );
 		}
 
 		// Loop found terms and concatenate list items.
@@ -210,7 +210,7 @@ class Taxonomy_Switcher_UI {
 		}
 
 		if ( ! $items ) {
-			$this->send_error( __LINE__, __( 'No terms found with children.', 'wds' ) );
+			$this->send_error( __LINE__, esc_html__( 'No terms found with children.', 'taxonomy-switcher' ) );
 		}
 
 		$return = sprintf( '<ol>%s</ol>', $items );
@@ -229,7 +229,7 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function send_error( string $line, string $msg = '' ) {
 
-		$msg = $msg ?: esc_html__( 'No Results Found', 'wds' );
+		$msg = $msg ?: esc_html__( 'No Results Found', 'taxonomy-switcher' );
 
 		wp_send_json_error( [
 			'html' => '<ul><li>' . $msg . '</li></ul>',
