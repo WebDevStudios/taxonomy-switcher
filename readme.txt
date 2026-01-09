@@ -45,6 +45,12 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 
 == Changelog ==
 
+= 1.1.0 =
+* Updated: Confirmed 6.9 compatibility.
+* Updated: Converted away from jQuery.
+* Updated: Disable "parent" selector field if "from" taxonomy is not hierarchical.
+* Updated: Limit taxonomy lists to public only.
+
 = 1.0.8 =
 * Updated: Confirmed WP 6.8 compatibility.
 * Updated: Misc little code cleanups that should not affect anyone.
@@ -78,5 +84,5 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 
 == Upgrade Notice ==
 
-= 1.0.5 =
-* Updated: Confirmed WP 6.2.1 compatibility.
+= 1.1.0 =
+* WP 6.9 confirmation, jQuery removal, taxonomy select updates, hierarchical changes.
