@@ -1,80 +1,113 @@
-(function(window, document, $, undefined){
+window.TaxonomySwitcher = {};
 
-	window.TaxonomySwitcher = {};
+(function (window, document, txsw) {
 
-	var txsw         = TaxonomySwitcher;
-	var $context     = $('.wrap.taxonomy-switcher');
-	var $nonce       = $('#taxonomy_switcher_nonce');
-	var $ajaxinput   = $('#taxonomy-switcher-parent');
-	var $ajaxcontext = $ajaxinput.parents('tr');
-	var $ajaxresults = $('.taxonomy-switcher-ajax-results-posts', $ajaxcontext);
-	var $ajaxhelp    = $('.taxonomy-switcher-ajax-results-help', $ajaxcontext);
-	var $spinner     = $('.taxonomy-switcher-spinner', $ajaxcontext);
+	let context = document.querySelector('#wds-taxonomy-switcher');
+	let nonce = document.querySelector('#taxonomy_switcher_nonce');
+	let ajaxinput = document.querySelector('#taxonomy-switcher-parent');
+	let ajaxcontext = ajaxinput.closest('tr');
+	let ajaxresults = ajaxcontext.querySelector('.taxonomy-switcher-ajax-results-posts');
+	let ajaxhelp = ajaxcontext.querySelector('.taxonomy-switcher-ajax-results-help');
+	let spinner = ajaxcontext.querySelector('.taxonomy-switcher-spinner');
+	let from_tax = document.querySelector('#from_tax');
+	let parentselect = document.querySelector('#taxonomy-switcher-parent');
 
-	txsw.hideSpinner = function() {
+	if (from_tax) {
+		from_tax.addEventListener('change', (e) => {
+			let curval = e.currentTarget.value;
+			let selected = tsTaxData.find(obj => {
+				return obj.taxonomy === curval
+			});
+
+			if (selected) {
+				parentselect.disabled = selected.hierarchical === 'false';
+			}
+		});
+	}
+
+	txsw.hideSpinner = function () {
 		// when leaving the input
-		setTimeout(function(){
+		setTimeout(function () {
 			// if it's been 2 seconds, hide our spinner
-			$spinner.hide();
+			spinner.style.display = 'none';
 		}, 2000);
 	}
 
-	txsw.resultsClick = function( event ) {
-		event.preventDefault();
-		var $self = $(this);
-		$spinner.hide();
-		// populate post ID to field
-		$ajaxinput.val( $self.data('termid') );/*.focus()*/
-		$ajaxresults.html('');
-		$ajaxhelp.hide();
+	txsw.resultsClick = function (e) {
+		e.preventDefault();
+
+		let self = e.target;
+		spinner.style.display = 'none';
+
+		ajaxinput.value = self.dataset.termid;
+		ajaxresults.innerHTML = '';
+		ajaxhelp.style.display = 'none';
 	}
 
-	txsw.ajaxSuccess = function(response) {
-		console.log( 'response', response );
+	txsw.ajaxSuccess = function (response) {
+		ajaxresults.innerHTML = '';
 		// hide our spinner
-		$spinner.hide();
-
-		if ( typeof response.data !== 'undefined' ) {
-			$ajaxresults.html(response.data.html);
-			$ajaxhelp.show();
+		spinner.style.display = 'none';
+		if (typeof response.data !== 'undefined') {
+			ajaxresults.insertAdjacentHTML('afterbegin', response.data.html);
+			ajaxhelp.style.display = 'block';
 		}
 	}
 
-	txsw.maybeAjax = function( evt ) {
-
-		$self = $(this);
-		var term_search = $self.val();
-		if ( term_search.length < 2 )
+	txsw.maybeAjax = function (e) {
+		let term_search = e.target.value;
+		if (term_search.length < 2) {
 			return this;
+		}
 
 		// only proceed if the user has pressed a number, letter or backspace
-		if (evt.which <= 90 && evt.which >= 48 || evt.which == 8) {
+		if (e.keyCode <= 90 && e.keyCode >= 48 || e.code === 'Backspace') {
 			// clear out our results
-			$ajaxresults.html('');
-			$ajaxhelp.hide();
-			$spinner.css({'float':'none'}).show();
-			setTimeout(function(){
+			ajaxresults.innerHTML = '';
+			ajaxhelp.style.display = 'none';
+			spinner.style.float = 'none';
+			spinner.style.display = 'block';
+			spinner.style.visibility = 'visible';
+			setTimeout(function () {
 				// if they haven't typed in 500 ms
-				if ( $ajaxinput.val() == term_search ) {
-					$.ajax({
-						type     : 'post',
-						dataType : 'json',
-						url      : ajaxurl,
-						success  : txsw.ajaxSuccess,
-						data     : {
-							'action'   : 'taxonomy_switcher_search_term_handler',
-							'tax_name' : $('#from_tax').val(),
-							'search'   : term_search,
-							'nonce'    : $nonce.val()
-						}
+				if (ajaxinput.value === term_search) {
+					const data = new FormData();
+					const fromtax = document.querySelector('#from_tax');
+					data.append('action', 'taxonomy_switcher_search_term_handler');
+					if (fromtax) {
+						data.append('tax_name', fromtax.value);
+					}
+					data.append('search', term_search);
+					data.append('nonce', nonce.value);
+					const options = {
+						method: 'POST', body: data,
+					}
+
+					fetch(ajaxurl, options)
+						.then((response) => response.json())
+						.then((response) => {
+							txsw.ajaxSuccess(response);
+						}).catch((error) => {
+						console.log(error);
 					});
 				}
 			}, 500);
 		}
 	}
 
-	$context
-		.on( 'keyup', '#taxonomy-switcher-parent', txsw.maybeAjax ).blur( txsw.hideSpinner )
-		.on( 'click', '.taxonomy-switcher-ajax-results-posts a', txsw.resultsClick );
+	if (ajaxinput) {
+		ajaxinput.addEventListener('keyup', txsw.maybeAjax);
+		ajaxinput.addEventListener('blur', txsw.hideSpinner);
+	}
 
-})(window, document, jQuery);
+	if (context) {
+		context.addEventListener('click', () => {
+			let links = document.querySelectorAll('.taxonomy-switcher-ajax-results-posts a');
+			if (links) {
+				Array.from(links).forEach((link) => {
+					link.addEventListener('click', txsw.resultsClick);
+				});
+			}
+		})
+	}
+})(window, document, TaxonomySwitcher);

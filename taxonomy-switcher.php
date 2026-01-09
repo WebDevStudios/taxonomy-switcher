@@ -3,7 +3,7 @@
  * Plugin Name: Taxonomy Switcher
  * Plugin URI: https://github.com/WebDevStudios/taxonomy-switcher
  * Description: Switch terms from one taxonomy to another
- * Version: 1.0.8
+ * Version: 1.1.0
  * Author: WebDevStudios
  * Author URI: http://webdevstudios.com
  */
