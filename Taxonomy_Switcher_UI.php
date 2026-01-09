@@ -251,12 +251,16 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function get_terms( string $search_string, string $taxonomy, int $number = 10 ) {
 
-		$terms = get_terms( $taxonomy, [
-			'number'       => absint( $number ),
-			'name__like'   => $search_string,
-			'cache_domain' => 'taxonomy_switch_search2',
-			'get'          => 'all',
-		] );
+		$terms = get_terms(
+			[
+				'taxonomy'     => $taxonomy,
+				'number'       => absint( $number ),
+				'name__like'   => $search_string,
+				'cache_domain' => 'taxonomy_switch_search2',
+				'get'          => 'all',
+				'hide_empty'   => false,
+			]
+		);
 
 		return empty( $terms ) || is_wp_error( $terms ) ? false : $terms;
 
@@ -275,8 +279,9 @@ class Taxonomy_Switcher_UI {
 		$items = '';
 
 		foreach ( $terms as $term ) {
-			$children = get_terms( $term->taxonomy, [
-				'parent' => $term->term_id,
+			$children = get_terms( [
+				'taxonomy'   => $term->taxonomy,
+				'parent'     => $term->term_id,
 				'hide_empty' => false,
 			] );
 
