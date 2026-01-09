@@ -9,6 +9,21 @@ window.TaxonomySwitcher = {};
 	let ajaxresults = ajaxcontext.querySelector('.taxonomy-switcher-ajax-results-posts');
 	let ajaxhelp = ajaxcontext.querySelector('.taxonomy-switcher-ajax-results-help');
 	let spinner = ajaxcontext.querySelector('.taxonomy-switcher-spinner');
+	let from_tax = document.querySelector('#from_tax');
+	let parentselect = document.querySelector('#taxonomy-switcher-parent');
+
+	if ( from_tax ) {
+		from_tax.addEventListener('change', (e) => {
+			let curval = e.currentTarget.value;
+			let selected = tsTaxData.find(obj => {
+				return obj.taxonomy === curval
+			});
+
+			if (selected) {
+				parentselect.disabled = selected.hierarchical === 'false';
+			}
+		});
+	}
 
 	txsw.hideSpinner = function () {
 		// when leaving the input

@@ -87,7 +87,23 @@ class Taxonomy_Switcher_UI {
 	 * @since 1.0.0
 	 */
 	public function js() {
-		wp_enqueue_script( $this->admin_slug, $this->dir_url . 'js/' . $this->admin_slug . '.js', [ 'jquery' ], self::VERSION, true );
+		wp_enqueue_script( $this->admin_slug, $this->dir_url . 'js/' . $this->admin_slug . '.js', [], self::VERSION, true );
+
+		$taxonomies = get_taxonomies( [
+			'public' => true,
+		], 'objects' );
+		$tax_data = [];
+		foreach ( $taxonomies as $tax ) {
+			$tax_data[] = [
+				'taxonomy'     => $tax->name,
+				'hierarchical' => $tax->hierarchical ? 'true' : 'false',
+			];
+		}
+		wp_add_inline_script(
+			$this->admin_slug,
+			'const tsTaxData = ' . json_encode( $tax_data ),
+			'before'
+		);
 	}
 
 	/**
