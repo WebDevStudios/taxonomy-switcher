@@ -1,6 +1,6 @@
 window.TaxonomySwitcher = {};
 
-(function(window, document, txsw){
+(function (window, document, txsw) {
 
 	let context = document.querySelector('#wds-taxonomy-switcher');
 	let nonce = document.querySelector('#taxonomy_switcher_nonce');
@@ -12,7 +12,7 @@ window.TaxonomySwitcher = {};
 	let from_tax = document.querySelector('#from_tax');
 	let parentselect = document.querySelector('#taxonomy-switcher-parent');
 
-	if ( from_tax ) {
+	if (from_tax) {
 		from_tax.addEventListener('change', (e) => {
 			let curval = e.currentTarget.value;
 			let selected = tsTaxData.find(obj => {
