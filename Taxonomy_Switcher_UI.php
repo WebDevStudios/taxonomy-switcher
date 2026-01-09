@@ -7,13 +7,6 @@ class Taxonomy_Switcher_UI {
 	const VERSION = '1.0.8';
 
 	/**
-	 * Whether or not we are on WordPress 3.7.
-	 *
-	 * @var bool
-	 */
-	public bool $not_37 = false;
-
-	/**
 	 * Directory URL.
 	 *
 	 * @var string
@@ -54,12 +47,7 @@ class Taxonomy_Switcher_UI {
 	 * @since 1.0.0
 	 */
 	public function __construct() {
-
-		global $wp_version;
-
-		$this->not_37  = ! version_compare( $wp_version, '3.7' ) >= 0;
 		$this->dir_url = plugins_url( '/', __FILE__ );
-
 	}
 
 	/**
@@ -263,19 +251,12 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function get_terms( string $search_string, string $taxonomy, int $number = 10 ) {
 
-		if ( $this->not_37 ) {
-			// Add our term clause filter for this iteration (if < than 3.7).
-			add_filter( 'terms_clauses', [ $this, 'wilcard_term_name' ] );
-		}
-
 		$terms = get_terms( $taxonomy, [
 			'number'       => absint( $number ),
 			'name__like'   => $search_string,
 			'cache_domain' => 'taxonomy_switch_search2',
 			'get'          => 'all',
 		] );
-
-		remove_filter( 'terms_clauses', [ $this, 'wilcard_term_name' ] );
 
 		return empty( $terms ) || is_wp_error( $terms ) ? false : $terms;
 
@@ -312,21 +293,5 @@ class Taxonomy_Switcher_UI {
 
 		return $items;
 
-	}
-
-	/**
-	 * Make term search wildcard on front as well as back.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param array $clauses Query clauses.
-	 * @return array Modified query clauses.
-	 */
-	public function wilcard_term_name( $clauses ) {
-
-		// Add wildcard flag to beginning of term.
-		$clauses['where'] = str_replace( "name LIKE '", "name LIKE '%", $clauses['where'] );
-
-		return $clauses;
 	}
 }
