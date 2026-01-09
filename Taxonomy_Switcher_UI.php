@@ -97,7 +97,9 @@ class Taxonomy_Switcher_UI {
 	 */
 	public function do_page() {
 
-		$this->registered_taxonomies = get_taxonomies( [], 'objects' );
+		$this->registered_taxonomies = get_taxonomies( [
+			'public' => true,
+		], 'objects' );
 		?>
 		<div id="wds-taxonomy-switcher" class="wrap <?php echo esc_attr( $this->admin_slug ); ?>">
 			<h2><?php echo esc_html( $this->admin_title ); ?></h2>
