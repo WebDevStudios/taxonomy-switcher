@@ -3,7 +3,7 @@ Contributors: webdevstudios, pluginize
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3084056
 Tags: taxonomy, term, category, tag, switch
 Requires at least: 5.2
-Tested up to: 6.9
+Tested up to: 7.0
 Stable tag: 1.1.1
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
