@@ -22,6 +22,34 @@ Compatible with [wp-cli](http://wp-cli.org/). `wp taxonomy-switcher` for instruc
 
 ## Changelog
 
+#### 1.1.1
+* Updated: Confirmed 7.0 compatibility
+
+#### 1.1.0
+* Updated: Confirmed 6.9 compatibility.
+* Updated: Converted away from jQuery.
+* Updated: Disable "parent" selector field if "from" taxonomy is not hierarchical.
+* Updated: Limit taxonomy lists to public only.
+
+#### 1.0.8
+* Updated: Confirmed WP 6.8 compatibility.
+* Updated: Misc little code cleanups that should not affect anyone.
+
+#### 1.0.7
+* Updated: Confirmed WP 6.5 compatibility.
+
+#### 1.0.6
+* Updated: Confirmed WP 6.4 compatibility.
+* Updated: Moved capability back to manage_options to sync with options page.
+* Updated: Clear caches after conversion.
+* Fixed: PHP8 deprecation notices.
+
+#### 1.0.5
+* Updated: Confirmed WP 6.2.1 compatibility.
+
+#### 1.0.4
+* Updated: changed required capability to manage_categories
+
 #### 1.0.3
 * Compatibility confirmation for WordPress 5.4
 
