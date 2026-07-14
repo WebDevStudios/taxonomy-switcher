@@ -3,8 +3,8 @@ Contributors: webdevstudios, pluginize
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3084056
 Tags: taxonomy, term, category, tag, switch
 Requires at least: 5.2
-Tested up to: 6.9
-Stable tag: 1.1.0
+Tested up to: 7.0
+Stable tag: 1.1.1
 License: GNU AGPLv3
 License URI: http://www.gnu.org/licenses/agpl-3.0.html
 Requires PHP: 7.4
@@ -44,6 +44,9 @@ Please keep in mind, if parent isn't set, or you don't specify a comma-separated
 2. Live-searching for a parent term
 
 == Changelog ==
+
+= 1.1.1 =
+* Updated: Confirmed 7.0 compatibility
 
 = 1.1.0 =
 * Updated: Confirmed 6.9 compatibility.
